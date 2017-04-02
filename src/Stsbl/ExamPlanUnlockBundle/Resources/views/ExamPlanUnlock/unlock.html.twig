@@ -1,0 +1,27 @@
+{# src/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig #}
+{% extends bundle ~ "::page.html.twig" %}
+
+{% block page_title %}
+    {{ _('Unlock groups for exam plan') }} 
+    {% if bundle == 'IServCoreBundle' and app.request.attributes.get('_route') == 'manage_exam_plam_unlock' %}
+        - {{ _('Administration') }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {{ form(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    {# insert select2 in non admin view #}
+    {% if bundle == 'IServCoreBundle' %}
+        {% if app.environment != 'prod' %}
+            <!-- {{ _self }} => exam-plan-unlock-select2.js -->
+        {% endif %}
+        {% javascripts output='js/compiled/exam-plan-unlock-select2.js' filter='?uglifyjs2' '@IServCrudBundle/Resources/public/js/select2.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
+{% endblock %}

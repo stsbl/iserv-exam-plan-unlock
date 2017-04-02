@@ -1,0 +1,5 @@
+debian/stsbl-iserv-exam-plan-unlock/*
+debian/stsbl-iserv-exam-plan-unlock.substvars
+debian/stsbl-iserv-exam-plan-unlock.debhelper.log
+debian/files
+debian/debhelper-build-stamp

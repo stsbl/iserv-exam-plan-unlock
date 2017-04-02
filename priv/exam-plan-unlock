@@ -1,0 +1,11 @@
+flag.exam_plan_unlock:
+module        Exam plan
+title         Group can be unlocked by the group owner
+description   Use this flag to control which group can be unlocked afterwards for the exam plan by the group owner
+
+priv.exam_plan_unlocker:
+module        Exam plan
+title         Unlock groups for exam plan
+description   Users with this privilege can unlock groups which they own for the exam plan.
+assign        admins
+assignroles   admin

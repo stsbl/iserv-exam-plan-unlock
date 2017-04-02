@@ -1,0 +1,6 @@
+ExamPlanUnlockMinMembers:
+name        Required amount of group members for unlocking
+description If this value is set to another number than 0, this amount of members is required to unlock a group for the exam plan.\nSet this setting to 0 to disable the restriction.
+type        int:members
+group       Module: Exam plan
+default     0

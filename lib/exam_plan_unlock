@@ -1,0 +1,69 @@
+#!/usr/bin/perl -T -CSDAL
+
+use warnings;
+use utf8;
+use strict;
+use IServ::Conf;
+use IServ::DB;
+use IServ::Locale;
+use IServ::User;
+use IServ::Tools;
+use Stsbl::IServ::IO;
+use Stsbl::IServ::Log;
+use Stsbl::IServ::Security;
+use POSIX;
+
+if (@ARGV < 2)
+{
+  print STDERR "Usage: exam_plan_unlock LOGIN GROUP [GROUP ...]\n";
+  print STDERR "Environment: PASSWORD, IP, IPWD\n";
+  exit 1;
+}
+
+my $login_ip = $ENV{IP} // "";
+my $login_ip_fwd = $ENV{IPFWD} // "";
+my $login_pwd = $ENV{PASSWORD} // $ENV{SESSPW};
+my $login_act = shift @ARGV;
+my @groups = @ARGV;
+my $priv = "exam_plan_unlocker";
+my $d_priv = "exam_plan_do";
+my $flag = "exam_plan_unlock";
+undef %ENV;
+POSIX::setlocale(POSIX::LC_CTYPE, $conf->{DefLang} . ".UTF-8");
+POSIX::setlocale(POSIX::LC_MESSAGES, $conf->{DefLang} . ".UTF-8");
+IServ::Locale::UseDefLang();
+
+set_ips $login_ip, $login_ip_fwd;
+set_credentials $login_act, $login_pwd;
+sessauth_auth "exam_plan_unlock";
+req_auth;
+req_priv $priv;
+
+sub chk_members($)
+{
+  my ($actgrp) = @_;
+  my $min_amount = $conf->{ExamPlanUnlockMinMembers};
+  return if $min_amount eq 0;
+
+  my ($members_amount) = IServ::DB::SelectCol "SELECT COUNT(*) FROM members WHERE ActGrp = ?", $actgrp;
+
+  Stsbl::IServ::IO::error "group $actgrp has too less members!" 
+    if $members_amount < $min_amount; 
+}
+
+foreach my $group (@groups)
+{
+  req_group_owner $group;
+  req_flag $group, $flag;
+  chk_members $group;
+}
+
+my @privs = ($d_priv);
+IServ::User::PrivAdd @groups, @privs;
+
+foreach my $group (@groups)
+{
+  my $name = IServ::Tools::pwname $group;
+  my $log = "Gruppe \"$name\" für den Klausurplan freigeschaltet";
+  Stsbl::IServ::Log::write_for_module $log, "Exam plan";
+}
