@@ -10,7 +10,11 @@ services:
             
     stsbl.exam_plan_unlock.security.unlock_voter:
         class: Stsbl\ExamPlanUnlockBundle\Security\Authorization\Voter\UnlockVoter
-        arguments: ["@security.access.decision_manager", "@doctrine.orm.entity_manager"]
+        arguments: ["@security.access.decision_manager", "@doctrine.orm.entity_manager", "@stsbl.exam_plan_unlock.detector"]
         public: false
         tags:
             - { name: security.voter }
+            
+    stsbl.exam_plan_unlock.detector:
+        class: Stsbl\ExamPlanUnlockBundle\Service\GroupDetector
+        arguments: ["@doctrine.orm.entity_manager", "@iserv.security_handler"]

@@ -54,27 +54,7 @@ class ExamPlanUnlockController extends PageController
     {
         /* @var $builder \Symfony\Component\Form\FormBuilder */
         $builder = $this->get('form.factory')->createNamedBuilder('exam_plan_unlock');
-        
-        /* @var $groupRepo \IServ\CoreBundle\Entity\GroupRepository */
-        $groupRepo = $this->getDoctrine()->getRepository('IServCoreBundle:Group');
-        
-        $privilegeQueryBuilder = $groupRepo->createQueryBuilder('g2');
-
-        $privilegeQueryBuilder
-            ->select('g2.account')
-            ->join('g2.privileges', 'p')
-            ->where('p.id = :priv')
-        ;
-        
-        /* @var $groupsWithFlag array<\IServ\CoreBundle\Entity\Group> */
-        $availableGroups = $groupRepo->createFindByFlagQueryBuilder(Privilege::FLAG_UNLOCKABLE)
-            ->andWhere('g.owner = :owner')
-            ->andWhere($privilegeQueryBuilder->expr()->notIn('g.account', $privilegeQueryBuilder->getDQL()))
-            ->setParameter('owner', $this->getUser())
-            ->setParameter('priv', strtolower(substr(ExamPrivilege::DOING_EXAMS, 5)))
-            ->getQuery()
-            ->getResult()
-        ;
+        $availableGroups = $this->get('stsbl.exam_plan_unlock.detector')->getGroups();
         
         $builder
             ->add('groups', EntityType::class, [

@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Stsbl\ExamPlanUnlockBundle\Security\Privilege;
+use Stsbl\ExamPlanUnlockBundle\Service\GroupDetector;
 
 /*
  * The MIT License
@@ -55,14 +56,22 @@ class UnlockVoter extends Voter
     private $em; 
     
     /**
+     * @var GroupDetector
+     */
+    private $detector;
+    
+    /**
      * The constructor.
      * 
      * @param AccessDecisionManagerInterface $decisionManager
+     * @param EntityManager $em
+     * @param GroupDetector $detector
      */
-    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManager $em) 
+    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManager $em, GroupDetector $detector) 
     {
         $this->decisionManager = $decisionManager;
         $this->em = $em;
+        $this->detector = $detector;
     }
     
     /**
@@ -79,7 +88,7 @@ class UnlockVoter extends Voter
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         if ($attribute === self::ATTRIBUTE) {
-            if ($this->decisionManager->decide($token, $this->getSupportedPrivileges()) && $this->hasUnlockableGroups($token->getUser())) {
+            if ($this->decisionManager->decide($token, $this->getSupportedPrivileges()) && $this->hasUnlockableGroups()) {
                 return true;
             }
             
@@ -102,27 +111,9 @@ class UnlockVoter extends Voter
      * 
      * @return bool
      */
-    private function hasUnlockableGroups(User $user)
+    private function hasUnlockableGroups()
     {
-        $groupRepository = $this->em->getRepository('IServCoreBundle:Group');
-
-        $privilegeQueryBuilder = $groupRepository->createQueryBuilder('g2');
-
-        $privilegeQueryBuilder
-            ->select('g2.account')
-            ->join('g2.privileges', 'p')
-            ->where('p.id = :priv')
-        ;
-        
-        /* @var $groupsWithFlag array<\IServ\CoreBundle\Entity\Group> */
-        $availableGroups = $groupRepository->createFindByFlagQueryBuilder(Privilege::FLAG_UNLOCKABLE)
-            ->andWhere('g.owner = :owner')
-            ->andWhere($privilegeQueryBuilder->expr()->notIn('g.account', $privilegeQueryBuilder->getDQL()))
-            ->setParameter('owner', $user)
-            ->setParameter('priv', strtolower(substr(ExamPrivilege::DOING_EXAMS, 5)))
-            ->getQuery()
-            ->getResult()
-        ;
+        $availableGroups = $this->detector->getGroups();
         
         return count($availableGroups) > 0;
     }
