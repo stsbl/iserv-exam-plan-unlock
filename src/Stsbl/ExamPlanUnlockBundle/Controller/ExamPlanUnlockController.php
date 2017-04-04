@@ -95,6 +95,7 @@ class ExamPlanUnlockController extends PageController
         $form = $this->getUnlockForm();
         $form->handleRequest($request);
         $routeName = $request->get('_route');
+        $failedGroups = null;
         
         if ($form->isSubmitted() && $form->isValid()) {
             $groups = $form->getData()['groups'];
@@ -103,6 +104,7 @@ class ExamPlanUnlockController extends PageController
             $unlockService = $this->get('stsbl.exam_plan_unlock.unlock');
             $unlockService->setGroups($groups);
             $unlockService->unlock();
+            $failedGroups = $unlockService->getFailedGroups();
             
             if (count($unlockService->getErrors()) > 0) {
                 $this->get('iserv.flash')->error(implode("\n", $unlockService->getErrors()));
@@ -144,6 +146,11 @@ class ExamPlanUnlockController extends PageController
         
         $view = $form->createView();
         
-        return ['bundle' => $bundle, 'menu' => $menu, 'form' => $view, 'help' => 'https://it.stsbl.de/documentation/mods/stsbl-iserv-exam-plan-unlock'];
+        return [
+            'bundle' => $bundle, 
+            'menu' => $menu, 
+            'form' => $view, 
+            'failed' => $failedGroups,
+            'help' => 'https://it.stsbl.de/documentation/mods/stsbl-iserv-exam-plan-unlock'];
     }
 }

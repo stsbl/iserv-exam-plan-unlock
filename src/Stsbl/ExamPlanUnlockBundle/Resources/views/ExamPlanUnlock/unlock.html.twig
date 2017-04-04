@@ -9,6 +9,24 @@
 {% endblock %}
 
 {% block content %}
+    {% if failed is not null and failed is iterable %}
+        <div class="alert alert-warning">
+            <p>{{ _("The following couldn't became unlocked for the exam plan because they haven't enough members:") }}</p>
+            <ul>
+            {% for f in failed %}
+                <li>
+                    {% if bundle == 'IServCoreBundle' %} 
+                        {% set link = path('manage_group_edit', {'id': f.id}) %} 
+                    {% else %}
+                        {% set link = path('admin_group_edit', {'id': f.id}) %}
+                    {% endif %}
+                    
+                    {{ f }} (<a href="{{ link }}">{{ _("Edit group to fill with members") }}</a>)
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
     {{ form(form) }}
 {% endblock %}
 

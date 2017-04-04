@@ -50,6 +50,11 @@ class Unlock
     private $groups;
     
     /**
+     * @var array<Group>
+     */
+    private $failedGroups;
+    
+    /**
      * @var Shell
      */
     private $shell;
@@ -145,7 +150,9 @@ class Unlock
     }
     
     /**
-     * Validates member amout of groups
+     * Validates member amout of groups.
+     * 
+     * Moves failed groups into <tt>$failedGroups</tt> (they can later get by <tt>getFailedGroups()</tt>).
      */
     private function validateMemberAmount()
     {
@@ -155,6 +162,7 @@ class Unlock
         
         // reset
         $this->errors = [];
+        $this->failedGroups = [];
         
         $minMembers = $this->config->get('ExamPlanUnlockMinMembers');
         // return if there a no restrictions
@@ -165,6 +173,8 @@ class Unlock
         foreach ($this->groups as $k => $v) {
             if ($v->getUsers()->count() < $minMembers) {
                 $this->errors[] = __('Group "%s" has too less members for unlocking.', (string)$v);
+                // move group to failed
+                $this->failedGroups[] = $v;
                 // remove invalid group from pending operation - to keep them would cause exam_plan_unlock errors
                 unset($this->groups[$k]);
             }
@@ -209,5 +219,15 @@ class Unlock
     public function getErrors()
     {
         return $this->errors;
+    }
+    
+    /**
+     * Get groups which didn't pass the member check
+     * 
+     * @return array<Group>
+     */
+    public function getFailedGroups()
+    {
+        return $this->failedGroups;
     }
 }
