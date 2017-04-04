@@ -121,6 +121,10 @@ class ExamPlanUnlockController extends PageController
             // replace handled form with unhandled one
             unset($form);
             $form = $this->getUnlockForm();
+            // re-add failed groups 
+            if (count($failedGroups) > 0) {
+                $form->get('groups')->setData($failedGroups);
+            }
         } else {
             foreach ($form->getErrors(true) as $e) {
                 $this->get('iserv.flash')->error($e);

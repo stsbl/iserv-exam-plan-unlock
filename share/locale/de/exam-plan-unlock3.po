@@ -34,7 +34,7 @@ msgid ""
 "The following couldn't became unlocked for the exam plan because they "
 "haven't enough members:"
 msgstr ""
-"Die folgende Gruppen konnten nicht für den Klausurplan freigeschaltet "
+"Die folgenden Gruppen konnten nicht für den Klausurplan freigeschaltet "
 "werden, da sie zu wenig Mitglieder haben:"
 
 #: /tmp/exam-plan-unlock-StsblExamPlanUnlockBundle.twig.php:124
