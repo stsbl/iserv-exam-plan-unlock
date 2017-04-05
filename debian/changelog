@@ -1,3 +1,15 @@
+stsbl-iserv-exam-plan-unlock (17.04.05-0) experimental; urgency=medium
+
+  [ Felix Jacobi ]
+  * Moved group detection into a reusable service container.
+  * Added deep link to group editing.
+  * Updated l10n.
+  * Don't drop failed group from unlock form field.
+
+  iserv: Wenn das Freischalten einer Gruppe aufgrund zu weniger Mitglieder scheitert, erhält der Benutzer nun eine detaillierte Fehlermeldung, die direkt einen Link zur Bearbeiten der entsprechenden Gruppe enthält, um Mitglieder hinzuzufügen.
+
+ -- Stadtteilschule Blankenese <repository@stsbl.de>  Wed, 05 Apr 2017 17:14:48 +0200
+
 stsbl-iserv-exam-plan-unlock (17.04.02-1) experimental; urgency=medium
 
   [ Felix Jacobi ]
