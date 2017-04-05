@@ -8,7 +8,7 @@ Homepage: https://it.stsbl.de/doc/mods/stsbl-iserv-exam-plan-unlock
 
 Package: stsbl-iserv-exam-plan-unlock
 Architecture: all
-Depends: iserv-portal, stsbl-iserv-perl-lib, iserv-exam-plan
+Depends: iserv-portal, stsbl-iserv-perl-lib, iserv-exam-plan, stsbl-iserv3-maintenance
 Description: Gruppen freischalten für den IServ Klausurplan (EXPERIMENTELL)
  Ermöglicht es Gruppenbesitzern, ihre Gruppe selbstständig für die Nutzung mit dem Klausurplan (Teilnahmerecht) freizuschalten.
  .
