@@ -1,5 +1,5 @@
 <?php
-// src/Stsbl/ExamPlanUnlockBundle/Resources/translation/messages.php
+// src/Stsbl/ExamPlanUnlockBundle/Resources/translations/messages.php
 
 /* 
  * The MIT License
