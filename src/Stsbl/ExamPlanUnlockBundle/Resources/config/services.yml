@@ -8,6 +8,13 @@ services:
         tags:
             - { name: kernel.event_subscriber } # Tells IServ about our subsriber
             
+    stsbl.exam_plan_unlock.dashboard:
+        class: Stsbl\ExamPlanUnlockBundle\EventListener\DashboardListener # Out DashboardListener Class
+        arguments: ["@stsbl.exam_plan_unlock.detector"]
+        tags:
+          - { name: kernel.event_listener, event: iserv.manage.dashboard, method: onBuildManageDashboard}
+          - { name: kernel.event_listener, event: iserv_portal.build_idesk, method: onBuildIDesk }
+            
     stsbl.exam_plan_unlock.security.unlock_voter:
         class: Stsbl\ExamPlanUnlockBundle\Security\Authorization\Voter\UnlockVoter
         arguments: ["@security.access.decision_manager", "@doctrine.orm.entity_manager", "@stsbl.exam_plan_unlock.detector"]
