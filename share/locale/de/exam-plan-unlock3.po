@@ -85,7 +85,7 @@ msgstr ""
 #: src/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php:87
 #, php-format
 msgid "You have to unlock %d groups for the exam plan"
-msgstr "Sie müssen %d Gruppen für den Klausurplan freischalten."
+msgstr "Sie müssen %d Gruppen für den Klausurplan freischalten"
 
 #: src/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php:88
 msgid "The following groups are in queue for unlocking:"
