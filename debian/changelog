@@ -1,3 +1,18 @@
+stsbl-iserv-exam-plan-unlock (17.05.23-0) experimental; urgency=medium
+
+  [ Felix Jacobi ]
+  * Add dashboard warning on idesk and manage index if there are unlockable groups.
+  * Fixed bundle structure.
+  * Updated l10n.
+  * Fixed l10n.
+
+  iserv: Benutzer mit dem Freischaltrecht und freischaltbaren Gruppen werden
+    nun auf dem IDesk in IServ 3 sowie dem Verwaltungsbereich deutlich darauf
+    hingewiesen, dass noch Gruppen für den Klausurplan zur Freischaltung
+    ausstehen.
+
+ -- Stadtteilschule Blankenese <repository@stsbl.de>  Tue, 23 May 2017 12:01:53 +0200
+
 stsbl-iserv-exam-plan-unlock (17.05.13-0) experimental; urgency=medium
 
   [ Felix Jacobi ]
