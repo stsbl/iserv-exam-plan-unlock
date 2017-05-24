@@ -9,8 +9,8 @@ Homepage: https://it.stsbl.de/doc/mods/stsbl-iserv-exam-plan-unlock
 Package: stsbl-iserv-exam-plan-unlock
 Architecture: all
 Depends: iserv-portal, stsbl-iserv-perl-lib, iserv-exam-plan, stsbl-iserv3-maintenance
-Description: Gruppen freischalten für den IServ Klausurplan (EXPERIMENTELL)
+Description: Gruppen freischalten für den IServ Klausurplan
  Ermöglicht es Gruppenbesitzern, ihre Gruppe selbstständig für die Nutzung mit dem Klausurplan (Teilnahmerecht) freizuschalten.
  .
  Der Administrator kann eine Mindestanzahl von nötigen Mitgliedern dafür angeben, sowie mit einem Gruppenmerkmal festlegen, welche Gruppen freischaltbar sind.
-Tag: suite::iserv:portal, role::plugin, status::highlighted, status::experimental
+Tag: suite::iserv:portal, role::plugin, status::recommended, implemented-in::php, implemented-in::perl
