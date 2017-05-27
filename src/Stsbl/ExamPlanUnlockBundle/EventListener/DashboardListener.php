@@ -84,7 +84,7 @@ class DashboardListener implements IDeskListenerInterface
             'manage.stsblexamplanunlockgroups',
             'StsblExamPlanUnlockBundle:Dashboard:pending.html.twig',
             [
-                'title' => __('You have to unlock %d groups for the exam plan', count($groups)),
+                'title' => __n('You have to unlock one group for the exam plan', 'You have to unlock %d groups for the exam plan', count($groups)),
                 'text' => _('The following groups are in queue for unlocking:'),
                 'additional_text' => _('Please go to „Unlock groups for exam plan“ and unlock these groups for the exam plan.'),
                 'groups' => $groups,
