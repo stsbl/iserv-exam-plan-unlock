@@ -1,3 +1,14 @@
+stsbl-iserv-exam-plan-unlock (17.05.27-0) experimental; urgency=medium
+
+  [ Felix Jacobi ]
+  * Added panel for unlock form.
+  * Fixed superfluous display of failed message.
+  * Fixed singular/plural usage for dashboard widget.
+  * Updated l10n.
+  * Fixed l10n.
+
+ -- Stadtteilschule Blankenese <repository@stsbl.de>  Sat, 27 May 2017 08:57:01 +0200
+
 stsbl-iserv-exam-plan-unlock (17.05.24-0) experimental; urgency=medium
 
   [ Felix Jacobi ]
