@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    {% if failed is not null and failed is iterable %}
+    {% if failed is not null and failed is iterable and failed|length > 0 %}
         <div class="alert alert-warning">
             <p>{{ _("The following couldn't became unlocked for the exam plan because they haven't enough members:") }}</p>
             <ul style="list-style-type: none;">
@@ -27,7 +27,14 @@
             </ul>
         </div>
     {% endif %}
-    {{ form(form) }}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ _('Unlock groups for exam plan') }}</h3>
+        </div>
+        <div class="panel-body">
+            {{ form(form) }}
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
