@@ -1,14 +1,14 @@
 # IServ translation file en_US -> de_DE
-# Copyright (C) IServ (iserv.eu)
+# Copyright (C) Stadtteilschule Blankenese
 # This file is distributed under the same license as the IServ package.
 msgid ""
 msgstr ""
 "Project-Id-Version: v.0.97.6b\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-23 11:54+0200\n"
+"POT-Creation-Date: 2017-05-27 08:48+0200\n"
 "PO-Revision-Date: 2005-02-18 10:55+MET\n"
-"Last-Translator: IServ GmbH <info@iserv.eu>\n"
-"Language-Team: en_US/de_DE <info@iserv.eu>\n"
+"Last-Translator: Felix Jacobi <felix.jacobi@stsbl.de>\n"
+"Language-Team: en_US/de_DE <repository@stsbl.de>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,8 +16,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: /tmp/exam-plan-unlock-StsblExamPlanUnlockBundle.twig.php:55
-#: /tmp/exam-plan-unlock-StsblExamPlanUnlockBundle.twig.php:455
-#: /tmp/exam-plan-unlock-StsblExamPlanUnlockBundle.twig.php:466
+#: /tmp/exam-plan-unlock-StsblExamPlanUnlockBundle.twig.php:144
+#: /tmp/exam-plan-unlock-StsblExamPlanUnlockBundle.twig.php:473
+#: /tmp/exam-plan-unlock-StsblExamPlanUnlockBundle.twig.php:484
 #: src/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php:29
 #: src/Stsbl/ExamPlanUnlockBundle/EventListener/MenuSubscriber.php:55
 #: src/Stsbl/ExamPlanUnlockBundle/EventListener/MenuSubscriber.php:74
@@ -84,8 +85,10 @@ msgstr ""
 
 #: src/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php:87
 #, php-format
-msgid "You have to unlock %d groups for the exam plan"
-msgstr "Sie müssen %d Gruppen für den Klausurplan freischalten"
+msgid "You have to unlock one group for the exam plan"
+msgid_plural "You have to unlock %d groups for the exam plan"
+msgstr[0] "Sie müssen eine Gruppen für den Klausurplan freischalten"
+msgstr[1] "Sie müssen %d Gruppen für den Klausurplan freischalten"
 
 #: src/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php:88
 msgid "The following groups are in queue for unlocking:"
@@ -111,3 +114,6 @@ msgstr ""
 #: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:74
 msgid "Unlock groups"
 msgstr "Gruppen freischalten"
+
+#~ msgid "You have to unlock %d groups for the exam plan"
+#~ msgstr "Sie müssen %d Gruppen für den Klausurplan freischalten"
