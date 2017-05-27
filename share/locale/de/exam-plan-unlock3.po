@@ -87,7 +87,7 @@ msgstr ""
 #, php-format
 msgid "You have to unlock one group for the exam plan"
 msgid_plural "You have to unlock %d groups for the exam plan"
-msgstr[0] "Sie müssen eine Gruppen für den Klausurplan freischalten"
+msgstr[0] "Sie müssen eine Gruppe für den Klausurplan freischalten"
 msgstr[1] "Sie müssen %d Gruppen für den Klausurplan freischalten"
 
 #: src/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php:88
