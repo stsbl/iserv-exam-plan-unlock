@@ -51,7 +51,7 @@ class DashboardListener implements IDeskListenerInterface
     /**
      * The constructor.
      * 
-     * @param EntityManager $em
+     * @param GroupDetector $detector
      */
     public function __construct(GroupDetector $detector) 
     {
@@ -62,8 +62,6 @@ class DashboardListener implements IDeskListenerInterface
      * Adds notice if there are unlockable groups for exam plan.
      * 
      * @param DashboardEvent $event
-     * @param string $eventName
-     * @param boolean $isIDesk
      */
     public function onBuildManageDashboard(DashboardEvent $event)
     {
@@ -80,11 +78,12 @@ class DashboardListener implements IDeskListenerInterface
                     ];
         }
         $groups = $this->detector->getGroups();
+
         $event->addContent(
             'manage.stsblexamplanunlockgroups',
             'StsblExamPlanUnlockBundle:Dashboard:pending.html.twig',
             [
-                'title' => __n('You have to unlock one group for the exam plan', 'You have to unlock %d groups for the exam plan', count($groups)),
+                'title' => __n('You have to unlock one group for the exam plan', 'You have to unlock %d groups for the exam plan', count($groups), count($groups)),
                 'text' => _('The following groups are in queue for unlocking:'),
                 'additional_text' => _('Please go to „Unlock groups for exam plan“ and unlock these groups for the exam plan.'),
                 'groups' => $groups,
