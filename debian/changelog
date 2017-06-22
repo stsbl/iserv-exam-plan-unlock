@@ -1,3 +1,12 @@
+stsbl-iserv-exam-plan-unlock (17.06.22-0) experimental; urgency=medium
+
+  [ Felix Jacobi ]
+  * Updated build deps and rules.
+  * Fixed build deps.
+  * Fixed gettext call.
+
+ -- Stadtteilschule Blankenese <repository@stsbl.de>  Thu, 22 Jun 2017 20:55:42 +0200
+
 stsbl-iserv-exam-plan-unlock (17.05.27-0) experimental; urgency=medium
 
   [ Felix Jacobi ]
