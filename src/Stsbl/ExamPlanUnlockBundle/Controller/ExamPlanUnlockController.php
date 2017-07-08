@@ -3,13 +3,12 @@
 namespace Stsbl\ExamPlanUnlockBundle\Controller;
 
 use IServ\CoreBundle\Controller\PageController;
-use IServ\ExamPlanBundle\Security\Privilege as ExamPrivilege;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Stsbl\ExamPlanUnlockBundle\Security\Privilege;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -63,7 +62,10 @@ class ExamPlanUnlockController extends PageController
                 'select2-icon' => 'legacy-act-group',
                 'multiple' => true,
                 'required' => false,
-                'constraints' => [new NotBlank()],
+                'constraints' => [
+                    new NotBlank(['message' => _('Please choose the groups which you want to unlock.')]),
+                    new Count(['min' => 1, 'minMessage' => _('Please choose the groups which you want to unlock.')])
+                ],
                 'by_reference' => false,
                 'choices' => $availableGroups,
                 'attr' => [
@@ -127,7 +129,7 @@ class ExamPlanUnlockController extends PageController
             }
         } else {
             foreach ($form->getErrors(true) as $e) {
-                $this->get('iserv.flash')->error($e);
+                $this->get('iserv.flash')->error($e->getMessage());
             }
         }
         
