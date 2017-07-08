@@ -3,6 +3,7 @@
 use warnings;
 use utf8;
 use strict;
+use Encode;
 use IServ::Conf;
 use IServ::DB;
 use IServ::Locale;
@@ -65,5 +66,7 @@ foreach my $group (@groups)
 {
   my $name = IServ::Tools::pwname $group;
   my $log = "Gruppe \"$name\" für den Klausurplan freigeschaltet";
+  $log = encode "UTF-8", $log;
+
   Stsbl::IServ::Log::write_for_module $log, "Exam plan";
 }
