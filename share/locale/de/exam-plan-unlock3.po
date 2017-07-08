@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: v.0.97.6b\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-27 08:48+0200\n"
+"POT-Creation-Date: 2017-07-09 01:39+0200\n"
 "PO-Revision-Date: 2005-02-18 10:55+MET\n"
 "Last-Translator: Felix Jacobi <felix.jacobi@stsbl.de>\n"
 "Language-Team: en_US/de_DE <repository@stsbl.de>\n"
@@ -22,13 +22,13 @@ msgstr ""
 #: src/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php:29
 #: src/Stsbl/ExamPlanUnlockBundle/EventListener/MenuSubscriber.php:55
 #: src/Stsbl/ExamPlanUnlockBundle/EventListener/MenuSubscriber.php:74
-#: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:146
 #: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:148
+#: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:150
 msgid "Unlock groups for exam plan"
 msgstr "Gruppen für Klausurplan freischalten"
 
 #: /tmp/exam-plan-unlock-StsblExamPlanUnlockBundle.twig.php:62
-#: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:145
+#: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:147
 msgid "Administration"
 msgstr "Verwaltung"
 
@@ -83,18 +83,18 @@ msgstr ""
 "freizuschalten.\\nSetzen Sie diese Einstellung auf 0, um die Beschränkung zu "
 "deaktivieren."
 
-#: src/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php:87
+#: src/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php:86
 #, php-format
 msgid "You have to unlock one group for the exam plan"
 msgid_plural "You have to unlock %d groups for the exam plan"
 msgstr[0] "Sie müssen eine Gruppe für den Klausurplan freischalten"
 msgstr[1] "Sie müssen %d Gruppen für den Klausurplan freischalten"
 
-#: src/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php:88
+#: src/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php:87
 msgid "The following groups are in queue for unlocking:"
 msgstr "Die folgenden Gruppen müssen freigeschaltet werden:"
 
-#: src/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php:89
+#: src/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php:88
 msgid ""
 "Please go to „Unlock groups for exam plan“ and unlock these groups for the "
 "exam plan."
@@ -102,16 +102,21 @@ msgstr ""
 "Bitte gehen Sie zu „Gruppen für Klausurplan freischalten“ und schalten Sie "
 "diese Gruppen für den Klausurplan frei."
 
-#: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:61
+#: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:60
 msgid "Groups"
 msgstr "Gruppen"
 
-#: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:70
+#: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:66
+#: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:67
+msgid "Please choose the groups which you want to unlock."
+msgstr "Bitte wählen Sie die Gruppen, welche Sie freischalten wollen."
+
+#: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:72
 msgid "Select the groups which you want to unlock for the exam plan."
 msgstr ""
 "Wählen Sie die Gruppen, die Sie für den Klausurplan freischalten möchten."
 
-#: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:74
+#: src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php:76
 msgid "Unlock groups"
 msgstr "Gruppen freischalten"
 
