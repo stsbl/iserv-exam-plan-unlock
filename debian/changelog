@@ -1,3 +1,13 @@
+stsbl-iserv-exam-plan-unlock (17.07.09-0) experimental; urgency=medium
+
+  [ Felix Jacobi ]  
+  * Updated install file.
+  * Fixed broken umlauts.
+  * Fixed empty form handling.
+  * Updated l10n.
+
+ -- Stadtteilschule Blankenese <repository@stsbl.de>  Sun, 09 Jul 2017 01:42:15 +0200
+
 stsbl-iserv-exam-plan-unlock (17.06.22-0) experimental; urgency=medium
 
   [ Felix Jacobi ]
