@@ -50,7 +50,7 @@ class MenuSubscriber implements AdminMenuListenerInterface, EventSubscriberInter
             $menu = $event->getMenu();
             $child = $menu->getChild('modules');
             
-            $item = $child->addChild('admin_examplan_unloc', [
+            $item = $child->addChild('admin_examplan_unlock', [
                 'route' => 'admin_examplan_unlock',
                 'label' => _('Unlock groups for exam plan')                
             ]);
