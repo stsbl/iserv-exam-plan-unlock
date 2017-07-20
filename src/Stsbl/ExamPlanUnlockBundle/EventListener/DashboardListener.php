@@ -90,7 +90,8 @@ class DashboardListener implements IDeskListenerInterface
                 'panel_class' => 'panel-warning',
                 'idesk' => $this->isIDeskEvent,
                 'icon' => $icon,
-            ]
+            ],
+            -2
         );
     }
 
