@@ -1,3 +1,11 @@
+stsbl-iserv-exam-plan-unlock (17.07.25-0) experimental; urgency=medium
+
+  [ Felix Jacobi ]
+  * Fixed too long extended description.
+  * GroupDetector: Exclude deleted groups.
+
+ -- Stadtteilschule Blankenese <repository@stsbl.de>  Tue, 25 Jul 2017 14:15:56 +0200
+
 stsbl-iserv-exam-plan-unlock (17.07.20-0) experimental; urgency=medium
 
   [ Felix Jacobi ]
