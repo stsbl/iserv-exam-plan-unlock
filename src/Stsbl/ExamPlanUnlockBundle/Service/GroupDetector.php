@@ -81,8 +81,9 @@ class GroupDetector
         
         /* @var $detectedGroups array<\IServ\CoreBundle\Entity\Group> */
         $detectedGroups = $groupRepo->createFindByFlagQueryBuilder(Privilege::FLAG_UNLOCKABLE)
-            ->andWhere('g.owner = :owner')
+            ->andWhere($privilegeQueryBuilder->expr()->eq('g.owner', ':owner'))
             ->andWhere($privilegeQueryBuilder->expr()->notIn('g.account', $privilegeQueryBuilder->getDQL()))
+            ->andWhere($privilegeQueryBuilder->expr()->isNull('g.deleted'))
             ->setParameter('owner', $this->securityHandler->getUser())
             ->setParameter('priv', strtolower(substr(ExamPrivilege::DOING_EXAMS, 5)))
             ->getQuery()

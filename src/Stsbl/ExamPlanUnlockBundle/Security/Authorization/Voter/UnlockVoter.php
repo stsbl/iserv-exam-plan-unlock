@@ -3,6 +3,7 @@
 namespace Stsbl\ExamPlanUnlockBundle\Security\Authorization\Voter;
 
 use Doctrine\ORM\EntityManager;
+use IServ\CoreBundle\Entity\Group;
 use IServ\CoreBundle\Entity\User;
 use IServ\ExamPlanBundle\Security\Privilege as ExamPrivilege;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -114,7 +115,7 @@ class UnlockVoter extends Voter
     private function hasUnlockableGroups()
     {
         $availableGroups = $this->detector->getGroups();
-        
+
         return count($availableGroups) > 0;
     }
 }
