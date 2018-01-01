@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 /*
  * The MIT License
  *
- * Copyright 2017 Fleix Jacobi.
+ * Copyright 2018 Fleix Jacobi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
