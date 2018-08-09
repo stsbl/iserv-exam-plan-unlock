@@ -39,7 +39,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-    
+
+    {# FIXME #}
     {# insert select2 in non admin view #}
     {% if bundle == 'IServCoreBundle' %}
         {% if app.environment != 'prod' %}
@@ -47,6 +48,5 @@
         {% endif %}
         {% javascripts output='js/compiled/exam-plan-unlock-select2.js' filter='?uglifyjs2' '@IServCrudBundle/Resources/public/js/select2.js' %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
     {% endif %}
 {% endblock %}
