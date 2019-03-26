@@ -1,27 +1,14 @@
 services:
-    stsbl.exam_plan_unlock.unlock:
-        class: Stsbl\ExamPlanUnlockBundle\Service\Unlock
-        arguments: ["@iserv.shell", "@iserv.security_handler", "@iserv.config", "@request_stack"]
-    
-    stsbl.exam_plan_unlock.menu:
-        class: Stsbl\ExamPlanUnlockBundle\EventListener\MenuSubscriber # Out MenuSubscriber Class
-        tags:
-            - { name: kernel.event_subscriber } # Tells IServ about our subsriber
-            
-    stsbl.exam_plan_unlock.dashboard:
-        class: Stsbl\ExamPlanUnlockBundle\EventListener\DashboardListener # Out DashboardListener Class
-        arguments: ["@stsbl.exam_plan_unlock.detector"]
-        tags:
-          - { name: kernel.event_listener, event: iserv.manage.dashboard, method: onBuildManageDashboard}
-          - { name: kernel.event_listener, event: iserv_portal.build_idesk, method: onBuildIDesk }
-            
-    stsbl.exam_plan_unlock.security.unlock_voter:
-        class: Stsbl\ExamPlanUnlockBundle\Security\Authorization\Voter\UnlockVoter
-        arguments: ["@security.access.decision_manager", "@doctrine.orm.entity_manager", "@stsbl.exam_plan_unlock.detector"]
+    _defaults:
+        autoconfigure: true
+        autowire: true
         public: false
-        tags:
-            - { name: security.voter }
-            
-    stsbl.exam_plan_unlock.detector:
-        class: Stsbl\ExamPlanUnlockBundle\Service\GroupDetector
-        arguments: ["@doctrine.orm.entity_manager", "@iserv.security_handler"]
+
+    Stsbl\ExamPlanUnlockBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Model,Resources,Tests}/*'
+
+    Stsbl\ExamPlanUnlockBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']

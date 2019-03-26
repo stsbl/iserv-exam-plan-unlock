@@ -1,10 +1,13 @@
 <?php
-// src/Stsbl/ExamPlanUnlockBundle/EventListener/ManageDashboardListener.php
+
 namespace Stsbl\ExamPlanUnlockBundle\EventListener;
 
 use IServ\CoreBundle\Event\DashboardEvent;
+use IServ\CoreBundle\Event\HomePageEvent;
 use IServ\CoreBundle\Event\IDeskEvent;
+use IServ\CoreBundle\EventListener\HomePageListenerInterface;
 use IServ\CoreBundle\EventListener\IDeskListenerInterface;
+use IServ\ManageBundle\EventListener\ManageDashboardListenerInterface;
 use Stsbl\ExamPlanUnlockBundle\Security\Authorization\Voter\UnlockVoter;
 use Stsbl\ExamPlanUnlockBundle\Service\GroupDetector;
 
@@ -36,7 +39,7 @@ use Stsbl\ExamPlanUnlockBundle\Service\GroupDetector;
  * @author Felix Jacobi <felix.jacobi@stsbl.de>
  * @license MIT license <https://opensource.org/licenses/MIT>
  */
-class DashboardListener implements IDeskListenerInterface
+class DashboardListener implements HomePageListenerInterface, ManageDashboardListenerInterface
 {
     /**
      * @var GroupDetector
@@ -47,23 +50,16 @@ class DashboardListener implements IDeskListenerInterface
      * @var boolean
      */
     private $isIDeskEvent = false;
-    
-    /**
-     * The constructor.
-     * 
-     * @param GroupDetector $detector
-     */
-    public function __construct(GroupDetector $detector) 
+
+    public function __construct(GroupDetector $detector)
     {
         $this->detector = $detector;
     }
     
     /**
      * Adds notice if there are unlockable groups for exam plan.
-     * 
-     * @param DashboardEvent $event
      */
-    public function onBuildManageDashboard(DashboardEvent $event)
+    public function onBuildManageDashboard(DashboardEvent $event): void
     {
         if (!$event->getAuthorizationChecker()->isGranted(UnlockVoter::ATTRIBUTE)) {
             // exit if user has no unlockable groups
@@ -83,9 +79,15 @@ class DashboardListener implements IDeskListenerInterface
             'manage.stsblexamplanunlockgroups',
             'StsblExamPlanUnlockBundle:Dashboard:pending.html.twig',
             [
-                'title' => __n('You have to unlock one group for the exam plan', 'You have to unlock %d groups for the exam plan', count($groups), count($groups)),
+                'title' => __n(
+                    'You have to unlock one group for the exam plan',
+                    'You have to unlock %d groups for the exam plan',
+                    count($groups),
+                    count($groups)
+                ),
                 'text' => _('The following groups are in queue for unlocking:'),
-                'additional_text' => _('Please go to „Unlock groups for exam plan“ and unlock these groups for the exam plan.'),
+                'additional_text' => _('Please go to „Unlock groups for exam plan“ and unlock these groups for the '.
+                    'exam plan.'),
                 'groups' => $groups,
                 'panel_class' => 'panel-warning',
                 'idesk' => $this->isIDeskEvent,
@@ -98,7 +100,7 @@ class DashboardListener implements IDeskListenerInterface
     /**
      * {@inheritdoc}
      */
-    public function onBuildIDesk(IDeskEvent $event) 
+    public function onBuildHomePage(HomePageEvent $event): void
     {
         $this->isIDeskEvent = true;
         $this->onBuildManageDashboard($event);

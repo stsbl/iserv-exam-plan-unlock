@@ -2,6 +2,7 @@
 // src/Stsbl/ExamPlanUnlockBundle/EventListener/MenuSubscriber.php
 namespace Stsbl\ExamPlanUnlockBundle\EventListener;
 
+use IServ\AdminBundle\Event\Events;
 use IServ\AdminBundle\EventListener\AdminMenuListenerInterface;
 use IServ\CoreBundle\Event\MenuEvent;
 use IServ\ManageBundle\Event\MenuEvent as ManageMenuEvent;
@@ -43,8 +44,8 @@ class MenuSubscriber implements AdminMenuListenerInterface, EventSubscriberInter
     /**
      * {@inheritdoc}
      */
-    public function onBuildAdminMenu(MenuEvent $event) 
-    {        
+    public function onBuildAdminMenu(MenuEvent $event): void
+    {
         // check privilege
         if ($event->getAuthorizationChecker()->isGranted(UnlockVoter::ATTRIBUTE)) {
             $menu = $event->getMenu();
@@ -52,26 +53,23 @@ class MenuSubscriber implements AdminMenuListenerInterface, EventSubscriberInter
             
             $item = $child->addChild('admin_examplan_unlock', [
                 'route' => 'admin_examplan_unlock',
-                'label' => _('Unlock groups for exam plan')                
+                'label' => _('Unlock groups for exam plan'),
             ]);
             
             $item->setExtra('icon', 'calendar-blue');
             $item->setExtra('icon_style', 'fugue');
         }
     }
-    
-    /**
-     * @param MenuEvent $event
-     */
-    public function onBuildManageMenu(MenuEvent $event)
-    {    
+
+    public function onBuildManageMenu(MenuEvent $event): void
+    {
         // check privilege
         if ($event->getAuthorizationChecker()->isGranted(UnlockVoter::ATTRIBUTE)) {
             $menu = $event->getMenu();
             
             $item = $menu->addChild('manage_examplan_unlock', [
                 'route' => 'manage_examplan_unlock',
-                'label' => _('Unlock groups for exam plan')                
+                'label' => _('Unlock groups for exam plan'),
             ]);
             
             $item->setExtra('icon', 'calendar-blue');
@@ -82,10 +80,10 @@ class MenuSubscriber implements AdminMenuListenerInterface, EventSubscriberInter
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents() 
+    public static function getSubscribedEvents()
     {
         return [
-            MenuEvent::ADMINMENU => 'onBuildAdminMenu',
+            Events::MENU => 'onBuildAdminMenu',
             ManageMenuEvent::MANAGEMENTMENU => 'onBuildManageMenu'
         ];
     }

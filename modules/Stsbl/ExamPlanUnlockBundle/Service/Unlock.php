@@ -3,12 +3,14 @@
 namespace Stsbl\ExamPlanUnlockBundle\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use IServ\CoreBundle\Entity\Group;
+use IServ\CoreBundle\Exception\TypeException;
 use IServ\CoreBundle\Security\Core\SecurityHandler;
+use IServ\CoreBundle\Service\ClientIp;
 use IServ\CoreBundle\Service\Config;
 use IServ\CoreBundle\Service\Shell;
-use IServ\CoreBundle\Entity\Group;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /*
  * The MIT License
@@ -43,7 +45,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class Unlock
 {
     const COMMAND = '/usr/lib/iserv/exam_plan_unlock';
-    
+
+    /**
+     * @var ClientIp
+     */
+    private $clientIp;
+
     /**
      * @var array<Group>
      */
@@ -81,13 +88,17 @@ class Unlock
     
     /**
      * Set groups for next operation
-     * 
-     * @param array<Group>|ArrayCollection $groups
+     *
+     * @param Group[]|Collection $groups
      */
-    public function setGroups($groups)
+    public function setGroups($groups): void
     {
-        if ($groups instanceof ArrayCollection) {
+        if ($groups instanceof Collection) {
             $groups = $groups->toArray();
+        }
+
+        if (!is_array($groups)) {
+            throw TypeException::invalid(gettype($groups), ['array', Collection::class], '$groups');
         }
         
         $this->groups = $groups;
@@ -95,30 +106,22 @@ class Unlock
     
     /**
      * Add a single group
-     * 
-     * @param Group $group
      */
-    public function addGroup(Group $group)
+    public function addGroup(Group $group): void
     {
         $this->groups[] = $group;
     }
-    
-    /**
-     * The constructor
-     * 
-     * @param Shell $shell
-     * @param SecurityHandler $securityHandler
-     */
-    public function __construct(Shell $shell, SecurityHandler $securityHandler, Config $config, RequestStack $stack) 
+
+    public function __construct(Shell $shell, SecurityHandler $securityHandler, Config $config, ClientIp $clientIp)
     {
         $this->shell = $shell;
         $this->securityHandler = $securityHandler;
         $this->config = $config;
-        $this->request = $stack->getCurrentRequest();
+        $this->clientIp = $clientIp;
     }
     
     /**
-     * Unlock groups which were previously set via <tt>setGroups</tt>. 
+     * Unlock groups which were previously set via <tt>setGroups</tt>.
      */
     public function unlock()
     {
@@ -140,18 +143,17 @@ class Unlock
         foreach ($this->groups as $g) {
             $args[] = $g->getAccount();
         }
-        
-        $fwdIp = preg_replace("/.*,\s*/", "", @$_SERVER["HTTP_X_FORWARDED_FOR"]);
+
         $this->shell->exec('closefd setsid sudo', $args, null, [
             'SESSPW' => $this->securityHandler->getSessionPassword(),
-            'IP' => $this->request->getClientIp(),
-            'IPFWD' => $fwdIp,
+            'IP' => $this->clientIp->getIp(),
+            'IPFWD' => $this->clientIp->getForwardedIp(),
         ]);
     }
     
     /**
-     * Validates member amout of groups.
-     * 
+     * Validates member amount of groups.
+     *
      * Moves failed groups into <tt>$failedGroups</tt> (they can later get by <tt>getFailedGroups()</tt>).
      */
     private function validateMemberAmount()
@@ -183,50 +185,48 @@ class Unlock
     
     /**
      * Get last shell output
-     * 
-     * @return array
+     *
+     * @return string[]
      */
-    public function getOutput()
+    public function getOutput(): array
     {
         return $this->shell->getOutput();
     }
     
     /**
      * Get last shell error output
-     * 
-     * @return array
+     *
+     * @return string[]
      */
-    public function getErrorOutput()
+    public function getErrorOutput(): array
     {
         return $this->shell->getError();
     }
     
     /**
      * Gets last shell exit code
-     * 
-     * @return integer
      */
-    public function getExitCode()
+    public function getExitCode(): ?int
     {
         return $this->shell->getExitCode();
     }
     
     /**
      * Get errors thrown during unlocking
-     * 
-     * @return array<string>
+     *
+     * @return string[]
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }
     
     /**
      * Get groups which didn't pass the member check
-     * 
-     * @return array<Group>
+     *
+     * @return Group[]
      */
-    public function getFailedGroups()
+    public function getFailedGroups(): array
     {
         return $this->failedGroups;
     }

@@ -3,6 +3,7 @@
 namespace Stsbl\ExamPlanUnlockBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use IServ\CoreBundle\Repository\GroupRepository;
 use IServ\CoreBundle\Security\Core\SecurityHandler;
 use IServ\ExamPlanBundle\Security\Privilege as ExamPrivilege;
 use Stsbl\ExamPlanUnlockBundle\Security\Privilege;
@@ -40,27 +41,21 @@ use Stsbl\ExamPlanUnlockBundle\Security\Privilege;
 class GroupDetector 
 {
     /**
-     * @var EntityManager 
+     * @var GroupRepository
      */
-    private $em;
-    
+    private $repository;
+
     /**
      * @var SecurityHandler
      */
     private $securityHandler;
-    
-    /**
-     * The constructor
-     * 
-     * @param EntityManager $em
-     * @param SecurityHandler $securityHandler
-     */
-    public function __construct(EntityManager $em, SecurityHandler $securityHandler) 
+
+    public function __construct(GroupRepository $repository, SecurityHandler $securityHandler)
     {
-        $this->em = $em;
+        $this->repository = $repository;
         $this->securityHandler = $securityHandler;
     }
-    
+
     /**
      * Returns detected groups
      * 
@@ -68,10 +63,7 @@ class GroupDetector
      */
     public function getGroups()
     {
-        /* @var $groupRepo \IServ\CoreBundle\Entity\GroupRepository */
-        $groupRepo = $this->em->getRepository('IServCoreBundle:Group');
-        
-        $privilegeQueryBuilder = $groupRepo->createQueryBuilder('g2');
+        $privilegeQueryBuilder = $this->repository->createQueryBuilder('g2');
 
         $privilegeQueryBuilder
             ->select('g2.account')
@@ -80,7 +72,7 @@ class GroupDetector
         ;
         
         /* @var $detectedGroups array<\IServ\CoreBundle\Entity\Group> */
-        $detectedGroups = $groupRepo->createFindByFlagQueryBuilder(Privilege::FLAG_UNLOCKABLE)
+        $detectedGroups = $this->repository->createFindByFlagQueryBuilder(Privilege::FLAG_UNLOCKABLE)
             ->andWhere($privilegeQueryBuilder->expr()->eq('g.owner', ':owner'))
             ->andWhere($privilegeQueryBuilder->expr()->notIn('g.account', $privilegeQueryBuilder->getDQL()))
             ->andWhere($privilegeQueryBuilder->expr()->isNull('g.deleted'))

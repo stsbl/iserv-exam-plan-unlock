@@ -1,16 +1,12 @@
 <?php
-// src/Stsbl/ExamPlanUnlockBundle/Security/Authorization/Voter/UnlockVoter.php
+
 namespace Stsbl\ExamPlanUnlockBundle\Security\Authorization\Voter;
 
-use Doctrine\ORM\EntityManager;
-use IServ\CoreBundle\Entity\Group;
-use IServ\CoreBundle\Entity\User;
-use IServ\ExamPlanBundle\Security\Privilege as ExamPrivilege;
+use Stsbl\ExamPlanUnlockBundle\Security\Privilege;
+use Stsbl\ExamPlanUnlockBundle\Service\GroupDetector;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Stsbl\ExamPlanUnlockBundle\Security\Privilege;
-use Stsbl\ExamPlanUnlockBundle\Service\GroupDetector;
 
 /*
  * The MIT License
@@ -51,34 +47,21 @@ class UnlockVoter extends Voter
      */
     private $decisionManager;
     
-    /*
-     * @var EntityManager
-     */
-    private $em; 
-    
     /**
      * @var GroupDetector
      */
     private $detector;
-    
-    /**
-     * The constructor.
-     * 
-     * @param AccessDecisionManagerInterface $decisionManager
-     * @param EntityManager $em
-     * @param GroupDetector $detector
-     */
-    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManager $em, GroupDetector $detector) 
+
+    public function __construct(AccessDecisionManagerInterface $decisionManager, GroupDetector $detector)
     {
         $this->decisionManager = $decisionManager;
-        $this->em = $em;
         $this->detector = $detector;
     }
     
     /**
      * {@inheritdoc}
      */
-    protected function supports($attribute, $subject) 
+    protected function supports($attribute, $subject): bool
     {
         return $attribute === self::ATTRIBUTE;
     }
@@ -86,33 +69,32 @@ class UnlockVoter extends Voter
     /**
      * {@inheritdoc}
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
-        if ($attribute === self::ATTRIBUTE) {
-            if ($this->decisionManager->decide($token, $this->getSupportedPrivileges()) && $this->hasUnlockableGroups()) {
-                return true;
-            }
-            
-            return false;
+        if ($attribute === self::ATTRIBUTE &&
+            $this->decisionManager->decide($token, $this->getSupportedPrivileges()) &&
+            $this->hasUnlockableGroups()
+        ) {
+            return true;
         }
+
+        return false;
     }
 
     /**
      * Get supported privileges
-     * 
+     *
      * @return string[]
      */
-    private function getSupportedPrivileges()
+    private function getSupportedPrivileges(): array
     {
         return [Privilege::UNLOCKER];
     }
     
     /**
      * Checks if user has cancelable group memberships
-     * 
-     * @return bool
      */
-    private function hasUnlockableGroups()
+    private function hasUnlockableGroups(): bool
     {
         $availableGroups = $this->detector->getGroups();
 
