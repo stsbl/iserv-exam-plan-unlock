@@ -1,5 +1,6 @@
 <?php
-// src/Stsbl/ExamPlanUnlockBundle/EventListener/MenuSubscriber.php
+declare(strict_types=1);
+
 namespace Stsbl\ExamPlanUnlockBundle\EventListener;
 
 use IServ\AdminBundle\Event\Events;
@@ -34,8 +35,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 
 /**
- * Description of MenuListener
- *
  * @author Felix Jacobi <felix.jacobi@stsbl.de>
  * @license MIT license <https://opensource.org/licenses/MIT>
  */

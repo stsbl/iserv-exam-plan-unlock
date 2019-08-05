@@ -1,16 +1,21 @@
 <?php
-// src/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+declare(strict_types=1);
+
 namespace Stsbl\ExamPlanUnlockBundle\Controller;
 
-use IServ\CoreBundle\Controller\PageController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use IServ\CoreBundle\Controller\AbstractPageController;
+use Knp\Menu\ItemInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Stsbl\ExamPlanUnlockBundle\Service\GroupDetector;
+use Stsbl\ExamPlanUnlockBundle\Service\Unlock;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\HttpFoundation\Request;
 
 /*
  * The MIT License
@@ -42,18 +47,38 @@ use Symfony\Component\HttpFoundation\Request;
  * @author Felix Jacobi <felix.jacobi@stsbl.de>
  * @license MIT license <https://opensource.org/licenses/MIT>
  */
-class ExamPlanUnlockController extends PageController
+class ExamPlanUnlockController extends AbstractPageController
 {
     /**
-     * Creates form for exam plan group unlocking
-     * 
-     * @return \Symfony\Component\Form\Form
+     * @var GroupDetector
      */
-    private function getUnlockForm()
+    private $detector;
+
+    /**
+     * @var ItemInterface
+     */
+    private $managementMenu;
+
+    /**
+     * @var Unlock
+     */
+    private $unlocker;
+
+    public function __construct(GroupDetector $detector, ItemInterface $managementMenu, Unlock $unlocker)
+    {
+        $this->detector = $detector;
+        $this->managementMenu = $managementMenu;
+        $this->unlocker = $unlocker;
+    }
+
+    /**
+     * Creates form for exam plan group unlocking
+     */
+    private function getUnlockForm(): FormInterface
     {
         /* @var $builder \Symfony\Component\Form\FormBuilder */
         $builder = $this->get('form.factory')->createNamedBuilder('exam_plan_unlock');
-        $availableGroups = $this->get('stsbl.exam_plan_unlock.detector')->getGroups();
+        $availableGroups = $this->detector->getGroups();
         
         $builder
             ->add('groups', EntityType::class, [
@@ -84,15 +109,13 @@ class ExamPlanUnlockController extends PageController
     
     /**
      * Provides page with form for group unlocking
-     * 
-     * @param Request $request
-     * @return array
+     *
      * @Route("/manage/examplan/unlock", name="manage_examplan_unlock")
      * @Route("/admin/examplan/unlock", name="admin_examplan_unlock")
      * @Security("is_granted('CAN_UNLOCK_GROUPS_FOR_EXAM_PLAN')")
      * @Template()
      */
-    public function unlockAction(Request $request)
+    public function unlockAction(Request $request): array
     {
         $form = $this->getUnlockForm();
         $form->handleRequest($request);
@@ -101,35 +124,31 @@ class ExamPlanUnlockController extends PageController
         
         if ($form->isSubmitted() && $form->isValid()) {
             $groups = $form->getData()['groups'];
+
+            $this->unlocker->setGroups($groups);
+            $this->unlocker->unlock();
             
-            /* @var $unlockService \Stsbl\ExamPlanUnlockBundle\Service\Unlock */
-            $unlockService = $this->get('stsbl.exam_plan_unlock.unlock');
-            $unlockService->setGroups($groups);
-            $unlockService->unlock();
-            $failedGroups = $unlockService->getFailedGroups();
-            
-            if (count($unlockService->getErrors()) > 0) {
-                $this->get('iserv.flash')->error(implode("\n", $unlockService->getErrors()));
+            if (!empty($errors = $this->unlocker->getErrors())) {
+                $this->addFlash('error', implode("\n", $errors));
             }
             
-            if (count($unlockService->getErrorOutput()) > 0) {
-                $this->get('iserv.flash')->error(implode("\n", $unlockService->getErrorOutput()));
+            if (!empty($errors = $this->unlocker->getErrorOutput())) {
+                $this->addFlash('error', implode("\n", $errors));
             }
             
-            if (count($unlockService->getOutput()) > 0) {
-                $this->get('iserv.flash')->success(implode("\n", $unlockService->getOutput()));
+            if (!empty($output = $this->unlocker->getOutput())) {
+                $this->addFlash('success', implode("\n", $output));
             }
             
             // replace handled form with unhandled one
-            unset($form);
             $form = $this->getUnlockForm();
-            // re-add failed groups 
-            if (count($failedGroups) > 0) {
+            // re-add failed groups
+            if (!empty($failedGroups = $this->unlocker->getFailedGroups())) {
                 $form->get('groups')->setData($failedGroups);
             }
         } else {
             foreach ($form->getErrors(true) as $e) {
-                $this->get('iserv.flash')->error($e->getMessage());
+                $this->addFlash('error', $e->getMessage());
             }
         }
         
@@ -139,7 +158,7 @@ class ExamPlanUnlockController extends PageController
             $menu = null;
         } else {
             $bundle = 'IServCoreBundle';
-            $menu = $this->get('iserv.menu.managment');
+            $menu = $this->managementMenu;
         }
         
         // track path
@@ -153,10 +172,11 @@ class ExamPlanUnlockController extends PageController
         $view = $form->createView();
         
         return [
-            'bundle' => $bundle, 
-            'menu' => $menu, 
-            'form' => $view, 
+            'bundle' => $bundle,
+            'menu' => $menu,
+            'form' => $view,
             'failed' => $failedGroups,
-            'help' => 'https://it.stsbl.de/documentation/mods/stsbl-iserv-exam-plan-unlock'];
+            'help' => 'https://it.stsbl.de/documentation/mods/stsbl-iserv-exam-plan-unlock'
+        ];
     }
 }

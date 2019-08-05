@@ -1,7 +1,6 @@
 #!/usr/bin/perl -T -CSDAL
 
 use warnings;
-use utf8;
 use strict;
 use Encode;
 use IServ::Conf;
@@ -65,8 +64,6 @@ IServ::User::PrivAdd @groups, @privs;
 foreach my $group (@groups)
 {
   my $name = IServ::Tools::pwname $group;
-  my $log = "Gruppe \"$name\" für den Klausurplan freigeschaltet";
-  $log = encode "UTF-8", $log;
-
+  my $log = decode "UTF-8", "Gruppe \"$name\" für den Klausurplan freigeschaltet";
   Stsbl::IServ::Log::write_for_module $log, "Exam plan";
 }

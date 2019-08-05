@@ -1,16 +1,16 @@
 <?php
-// src/Stsbl/ExamPlanUnlock/Service/Unlock.php
+declare(strict_types=1);
+
 namespace Stsbl\ExamPlanUnlockBundle\Service;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use IServ\CoreBundle\Entity\Group;
+use IServ\CoreBundle\Exception\ShellExecException;
 use IServ\CoreBundle\Exception\TypeException;
 use IServ\CoreBundle\Security\Core\SecurityHandler;
 use IServ\CoreBundle\Service\ClientIp;
 use IServ\CoreBundle\Service\Config;
 use IServ\CoreBundle\Service\Shell;
-use Symfony\Component\HttpFoundation\Request;
 
 /*
  * The MIT License
@@ -77,11 +77,6 @@ class Unlock
     private $config;
     
     /**
-     * @var Request
-     */
-    private $request;
-    
-    /**
      * @var array<string>
      */
     private $errors;
@@ -119,7 +114,7 @@ class Unlock
         $this->config = $config;
         $this->clientIp = $clientIp;
     }
-    
+
     /**
      * Unlock groups which were previously set via <tt>setGroups</tt>.
      */
@@ -144,11 +139,15 @@ class Unlock
             $args[] = $g->getAccount();
         }
 
-        $this->shell->exec('closefd setsid sudo', $args, null, [
-            'SESSPW' => $this->securityHandler->getSessionPassword(),
-            'IP' => $this->clientIp->getIp(),
-            'IPFWD' => $this->clientIp->getForwardedIp(),
-        ]);
+        try {
+            $this->shell->exec('sudo', $args, null, [
+                'SESSPW' => $this->securityHandler->getSessionPassword(),
+                'IP' => $this->clientIp->getIp(),
+                'IPFWD' => $this->clientIp->getForwardedIp(),
+            ]);
+        } catch (ShellExecException $e) {
+            throw new \RuntimeException('Could not run exam_plan_unlock!', 0, $e);
+        }
     }
     
     /**
@@ -156,7 +155,7 @@ class Unlock
      *
      * Moves failed groups into <tt>$failedGroups</tt> (they can later get by <tt>getFailedGroups()</tt>).
      */
-    private function validateMemberAmount()
+    private function validateMemberAmount(): void
     {
         if (count($this->groups) < 1) {
             throw new \InvalidArgumentException('No groups specified!');

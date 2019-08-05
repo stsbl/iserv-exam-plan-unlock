@@ -1,8 +1,10 @@
 <?php
-// src/Stsbl/ExamPlanUnlockBundle/Service/GroupDetector.php
+declare(strict_types=1);
+
 namespace Stsbl\ExamPlanUnlockBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use IServ\CoreBundle\Entity\Group;
 use IServ\CoreBundle\Repository\GroupRepository;
 use IServ\CoreBundle\Security\Core\SecurityHandler;
 use IServ\ExamPlanBundle\Security\Privilege as ExamPrivilege;
@@ -38,7 +40,7 @@ use Stsbl\ExamPlanUnlockBundle\Security\Privilege;
  * @author Felix Jacobi <felix.jacobi@stsbl.de>
  * @license MIT license <https://opensource.org/licenses/MIT>
  */
-class GroupDetector 
+class GroupDetector
 {
     /**
      * @var GroupRepository
@@ -58,10 +60,10 @@ class GroupDetector
 
     /**
      * Returns detected groups
-     * 
-     * @return array<\IServ\CoreBundle\Entity\Group>
+     *
+     * @return Group[]
      */
-    public function getGroups()
+    public function getGroups(): array
     {
         $privilegeQueryBuilder = $this->repository->createQueryBuilder('g2');
 
@@ -70,8 +72,7 @@ class GroupDetector
             ->join('g2.privileges', 'p')
             ->where('p.id = :priv')
         ;
-        
-        /* @var $detectedGroups array<\IServ\CoreBundle\Entity\Group> */
+
         $detectedGroups = $this->repository->createFindByFlagQueryBuilder(Privilege::FLAG_UNLOCKABLE)
             ->andWhere($privilegeQueryBuilder->expr()->eq('g.owner', ':owner'))
             ->andWhere($privilegeQueryBuilder->expr()->notIn('g.account', $privilegeQueryBuilder->getDQL()))

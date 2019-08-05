@@ -1,5 +1,6 @@
 <?php
-// src/Stsbl/ExamPlanUnlockBundle/StsblExamPlanUnlockBundle.php
+declare(strict_types=1);
+
 namespace Stsbl\ExamPlanUnlockBundle;
 
 use IServ\CoreBundle\Routing\AutoloadRoutingBundleInterface;
@@ -36,7 +37,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class StsblExamPlanUnlockBundle extends Bundle implements AutoloadRoutingBundleInterface
 {
-    public function getContainerExtension() 
+    public function getContainerExtension(): StsblExamPlanUnlockExtension
     {
         return new StsblExamPlanUnlockExtension();
     }

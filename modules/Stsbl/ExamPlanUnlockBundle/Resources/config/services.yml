@@ -4,6 +4,9 @@ services:
         autowire: true
         public: false
 
+        bind:
+            $managementMenu: '@iserv.menu.management'
+
     Stsbl\ExamPlanUnlockBundle\:
         resource: '../../*'
         exclude: '../../{Entity,Model,Resources,Tests}/*'

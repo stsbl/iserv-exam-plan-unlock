@@ -1,5 +1,6 @@
 <?php
-// src/Stsbl/ExamPlanUnlockBundle/DepenedencyInjection/StsblExamPlanUnlockExtension.php
+declare(strict_types=1);
+
 namespace Stsbl\ExamPlanUnlockBundle\DependencyInjection;
 
 use IServ\CoreBundle\DependencyInjection\IServBaseExtension;
