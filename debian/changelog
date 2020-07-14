@@ -1,3 +1,10 @@
+stsbl-iserv-exam-plan-unlock (20.07.14-1) stable; urgency=medium
+
+  * Bumped copyright
+  * Fixed handling manage dashboard event
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Tue, 14 Jul 2020 16:18:44 +0200
+
 stsbl-iserv-exam-plan-unlock (19.08.08-1) experimental; urgency=medium
 
   * Fixed deprecations
