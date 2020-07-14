@@ -46,11 +46,6 @@ class DashboardListener implements HomePageListenerInterface, ManageDashboardLis
      * @var GroupDetector
      */
     private $detector;
-    
-    /**
-     * @var boolean
-     */
-    private $isIDeskEvent = false;
 
     public function __construct(GroupDetector $detector)
     {
@@ -66,16 +61,25 @@ class DashboardListener implements HomePageListenerInterface, ManageDashboardLis
             // exit if user has no unlockable groups
             return;
         }
-        $icon = null;
-        // display icon on IDesk
-        if ($this->isIDeskEvent) {
-            $icon = [
-                        'style' => 'fugue',
-                        'name' => 'calendar-blue'
-                    ];
-        }
-        $groups = $this->detector->getGroups();
 
+        $this->addDashboardContent($event, false);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function onBuildHomePage(HomePageEvent $event): void
+    {
+        $this->addDashboardContent($event, true);
+    }
+
+    /**
+     * @param DashboardEvent $event
+     * @param bool $isIDeskEvent
+     */
+    private function addDashboardContent(DashboardEvent $event, bool $isIDeskEvent): void
+    {
+        $groups = $this->detector->getGroups();
         $event->addContent(
             'manage.stsblexamplanunlockgroups',
             'StsblExamPlanUnlockBundle:Dashboard:pending.html.twig',
@@ -87,24 +91,20 @@ class DashboardListener implements HomePageListenerInterface, ManageDashboardLis
                     count($groups)
                 ),
                 'text' => _('The following groups are in queue for unlocking:'),
-                'additional_text' => _('Please go to „Unlock groups for exam plan“ and unlock these groups for the '.
-                    'exam plan.'),
+                'additional_text' => _(
+                    'Please go to „Unlock groups for exam plan“ and unlock these groups for the ' .
+                    'exam plan.'
+                ),
                 'groups' => $groups,
                 'panel_class' => 'panel-warning',
-                'idesk' => $this->isIDeskEvent,
-                'icon' => $icon,
+                'idesk' => $isIDeskEvent,
+                'icon' => [
+                    'style' => 'fugue',
+                    'name' => 'calendar-blue'
+                ],
             ],
             -2
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function onBuildHomePage(HomePageEvent $event): void
-    {
-        $this->isIDeskEvent = true;
-        $this->onBuildManageDashboard($event);
     }
 
 }
