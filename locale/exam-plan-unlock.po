@@ -1,0 +1,130 @@
+# IServ translation file en_US -> de_DE
+# Copyright (C) Stadtteilschule Blankenese
+# This file is distributed under the same license as the IServ package.
+msgid ""
+msgstr ""
+"Project-Id-Version: v.0.97.6b\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-09 01:39+0200\n"
+"PO-Revision-Date: 2005-02-18 10:55+MET\n"
+"Last-Translator: Felix Jacobi <felix.jacobi@stsbl.de>\n"
+"Language-Team: en_US/de_DE <repository@stsbl.de>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
+msgid "Administration"
+msgstr "Verwaltung"
+
+#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
+msgid "Edit group to fill with members"
+msgstr "Gruppe bearbeiten, um Mitglieder hinzuzufügen"
+
+#: priv/exam-plan-unlock
+msgid "Exam plan"
+msgstr "Klausurplan"
+
+#: modules/Stsbl/ExamPlanUnlockBundle/Service/Unlock.php
+#, php-format
+msgid "Group \"%s\" has too less members for unlocking."
+msgstr "Gruppe \"%s\" hat zu wenige Mitglieder für das Freischalten."
+
+#: priv/exam-plan-unlock
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+msgid "Group can be unlocked by the group owner"
+msgstr "Gruppe kann von Besitzer freigeschaltet werden"
+
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+msgid "Groups"
+msgstr "Gruppen"
+
+#: config/80exam-plan-unlock
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+msgid ""
+"If this value is set to another number than 0, this amount of members is "
+"required to unlock a group for the exam plan.\\nSet this setting to 0 to "
+"disable the restriction."
+msgstr ""
+"Wenn dieser Wert auf eine andere Zahl als 0 gesetzt ist, wird diese Anzahl "
+"von Gruppenmitgliedern benötigt, um eine Gruppe für den Klausurplan "
+"freizuschalten.\\nSetzen Sie diese Einstellung auf 0, um die Beschränkung zu "
+"deaktivieren."
+
+#: config/80exam-plan-unlock
+msgid "Module: Exam plan"
+msgstr "Modul: Klausurplan"
+
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+msgid "Please choose the groups which you want to unlock."
+msgstr "Bitte wählen Sie die Gruppen, welche Sie freischalten wollen."
+
+#: modules/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php
+msgid ""
+"Please go to „Unlock groups for exam plan“ and unlock these groups for the "
+"exam plan."
+msgstr ""
+"Bitte gehen Sie zu „Gruppen für Klausurplan freischalten“ und schalten Sie "
+"diese Gruppen für den Klausurplan frei."
+
+#: config/80exam-plan-unlock
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+msgid "Required amount of group members for unlocking"
+msgstr "Benötigte Anzahl von Gruppenmitgliedern für das Freischalten"
+
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+msgid "Select the groups which you want to unlock for the exam plan."
+msgstr ""
+"Wählen Sie die Gruppen, die Sie für den Klausurplan freischalten möchten."
+
+#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
+msgid ""
+"The following couldn't became unlocked for the exam plan because they "
+"haven't enough members:"
+msgstr ""
+"Die folgenden Gruppen konnten nicht für den Klausurplan freigeschaltet "
+"werden, da sie zu wenig Mitglieder haben:"
+
+#: modules/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php
+msgid "The following groups are in queue for unlocking:"
+msgstr "Die folgenden Gruppen müssen freigeschaltet werden:"
+
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+msgid "Unlock groups"
+msgstr "Gruppen freischalten"
+
+#: priv/exam-plan-unlock
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+#: modules/Stsbl/ExamPlanUnlockBundle/EventListener/MenuSubscriber.php
+#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/Dashboard/pending.html.twig.php
+#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
+msgid "Unlock groups for exam plan"
+msgstr "Gruppen für Klausurplan freischalten"
+
+#: priv/exam-plan-unlock
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+msgid ""
+"Use this flag to control which group can be unlocked afterwards for the exam "
+"plan by the group owner"
+msgstr ""
+"Benutzen Sie dieses Merkmal, um zu konfigurieren, welche Gruppen von ihrem "
+"Eigentümer nachträglich für den Klausurplan freigeschaltet werden können"
+
+#: priv/exam-plan-unlock
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+msgid ""
+"Users with this privilege can unlock groups which they own for the exam plan."
+msgstr ""
+"Benutzer mit diesem Recht können Gruppen, deren Besitzer sie sind, für den "
+"Klausurplan freischalten."
+
+#: modules/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php
+#, php-format
+msgid "You have to unlock one group for the exam plan"
+msgid_plural "You have to unlock %d groups for the exam plan"
+msgstr[0] "Sie müssen eine Gruppe für den Klausurplan freischalten"
+msgstr[1] "Sie müssen %d Gruppen für den Klausurplan freischalten"

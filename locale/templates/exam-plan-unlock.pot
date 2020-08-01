@@ -1,0 +1,120 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-02 01:07+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
+msgid "Administration"
+msgstr ""
+
+#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
+msgid "Edit group to fill with members"
+msgstr ""
+
+#: priv/exam-plan-unlock
+msgid "Exam plan"
+msgstr ""
+
+#: modules/Stsbl/ExamPlanUnlockBundle/Service/Unlock.php
+#, php-format
+msgid "Group \"%s\" has too less members for unlocking."
+msgstr ""
+
+#: priv/exam-plan-unlock
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+msgid "Group can be unlocked by the group owner"
+msgstr ""
+
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+msgid "Groups"
+msgstr ""
+
+#: config/80exam-plan-unlock
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+msgid ""
+"If this value is set to another number than 0, this amount of members is "
+"required to unlock a group for the exam plan.\\nSet this setting to 0 to "
+"disable the restriction."
+msgstr ""
+
+#: config/80exam-plan-unlock
+msgid "Module: Exam plan"
+msgstr ""
+
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+msgid "Please choose the groups which you want to unlock."
+msgstr ""
+
+#: modules/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php
+msgid ""
+"Please go to „Unlock groups for exam plan“ and unlock these groups for the "
+"exam plan."
+msgstr ""
+
+#: config/80exam-plan-unlock
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+msgid "Required amount of group members for unlocking"
+msgstr ""
+
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+msgid "Select the groups which you want to unlock for the exam plan."
+msgstr ""
+
+#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
+msgid ""
+"The following couldn't became unlocked for the exam plan because they "
+"haven't enough members:"
+msgstr ""
+
+#: modules/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php
+msgid "The following groups are in queue for unlocking:"
+msgstr ""
+
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+msgid "Unlock groups"
+msgstr ""
+
+#: priv/exam-plan-unlock
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+#: modules/Stsbl/ExamPlanUnlockBundle/EventListener/MenuSubscriber.php
+#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/Dashboard/pending.html.twig.php
+#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
+msgid "Unlock groups for exam plan"
+msgstr ""
+
+#: priv/exam-plan-unlock
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+msgid ""
+"Use this flag to control which group can be unlocked afterwards for the exam "
+"plan by the group owner"
+msgstr ""
+
+#: priv/exam-plan-unlock
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+msgid ""
+"Users with this privilege can unlock groups which they own for the exam plan."
+msgstr ""
+
+#: modules/Stsbl/ExamPlanUnlockBundle/EventListener/DashboardListener.php
+#, php-format
+msgid "You have to unlock one group for the exam plan"
+msgid_plural "You have to unlock %d groups for the exam plan"
+msgstr[0] ""
+msgstr[1] ""
