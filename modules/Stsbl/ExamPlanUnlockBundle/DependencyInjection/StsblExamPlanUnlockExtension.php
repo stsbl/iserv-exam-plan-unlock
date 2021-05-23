@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Stsbl\ExamPlanUnlockBundle\DependencyInjection;
@@ -8,7 +9,7 @@ use IServ\CoreBundle\DependencyInjection\IServBaseExtension;
 /*
  * The MIT License
  *
- * Copyright 2020 Felix Jacobi.
+ * Copyright 2021 Felix Jacobi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +37,6 @@ use IServ\CoreBundle\DependencyInjection\IServBaseExtension;
  * @author Felix Jacobi <felix.jacobi@stsbl.de>
  * @license MIT license <https://opensource.org/licenses/MIT>
  */
-class StsblExamPlanUnlockExtension extends IServBaseExtension
+final class StsblExamPlanUnlockExtension extends IServBaseExtension
 {
 }

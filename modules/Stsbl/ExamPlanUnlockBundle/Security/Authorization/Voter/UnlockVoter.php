@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 /*
  * The MIT License
  *
- * Copyright 2020 Felix Jacobi.
+ * Copyright 2021 Felix Jacobi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,13 +40,13 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 class UnlockVoter extends Voter
 {
-    const ATTRIBUTE = 'CAN_UNLOCK_GROUPS_FOR_EXAM_PLAN';
+    public const ATTRIBUTE = 'CAN_UNLOCK_GROUPS_FOR_EXAM_PLAN';
 
     /**
      * @var AccessDecisionManagerInterface
      */
     private $decisionManager;
-    
+
     /**
      * @var GroupDetector
      */
@@ -57,7 +57,7 @@ class UnlockVoter extends Voter
         $this->decisionManager = $decisionManager;
         $this->detector = $detector;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -71,14 +71,9 @@ class UnlockVoter extends Voter
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
-        if ($attribute === self::ATTRIBUTE &&
+        return $attribute === self::ATTRIBUTE &&
             $this->decisionManager->decide($token, $this->getSupportedPrivileges()) &&
-            $this->hasUnlockableGroups()
-        ) {
-            return true;
-        }
-
-        return false;
+            $this->hasUnlockableGroups();
     }
 
     /**
@@ -90,7 +85,7 @@ class UnlockVoter extends Voter
     {
         return [Privilege::UNLOCKER];
     }
-    
+
     /**
      * Checks if user has cancelable group memberships
      */

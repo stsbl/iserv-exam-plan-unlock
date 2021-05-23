@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Stsbl\ExamPlanUnlockBundle\Service;
@@ -9,13 +10,13 @@ use IServ\CoreBundle\Exception\ShellExecException;
 use IServ\CoreBundle\Exception\TypeException;
 use IServ\CoreBundle\Security\Core\SecurityHandler;
 use IServ\CoreBundle\Service\ClientIp;
-use IServ\CoreBundle\Service\Config;
 use IServ\CoreBundle\Service\Shell;
+use IServ\Library\Config\Config;
 
 /*
  * The MIT License
  *
- * Copyright 2020 Fleix Jacobi.
+ * Copyright 2021 Felix Jacobi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,9 +43,9 @@ use IServ\CoreBundle\Service\Shell;
  * @author Felix Jacobi <felix.jacobi@stsbl.de>
  * @license MIT license <https://opensource.org/licenses/MIT>
  */
-class Unlock
+final class Unlock
 {
-    const COMMAND = '/usr/lib/iserv/exam_plan_unlock';
+    public const COMMAND = '/usr/lib/iserv/exam_plan_unlock';
 
     /**
      * @var ClientIp
@@ -55,32 +56,32 @@ class Unlock
      * @var array<Group>
      */
     private $groups;
-    
+
     /**
      * @var array<Group>
      */
     private $failedGroups;
-    
+
     /**
      * @var Shell
      */
     private $shell;
-    
+
     /**
      * @var SecurityHandler
      */
     private $securityHandler;
-    
+
     /**
-     * @var Config
+     * @var \IServ\Library\Config\Config
      */
     private $config;
-    
+
     /**
      * @var array<string>
      */
     private $errors;
-    
+
     /**
      * Set groups for next operation
      *
@@ -95,10 +96,10 @@ class Unlock
         if (!is_array($groups)) {
             throw TypeException::invalid(gettype($groups), ['array', Collection::class], '$groups');
         }
-        
+
         $this->groups = $groups;
     }
-    
+
     /**
      * Add a single group
      */
@@ -123,18 +124,18 @@ class Unlock
         $args = [];
         $args[] = self::COMMAND;
         $args[] = $this->securityHandler->getUser()->getUsername();
-        
+
         if (count($this->groups) < 1) {
             throw new \InvalidArgumentException('No groups specified!');
         }
-        
+
         $this->validateMemberAmount();
-        
+
         // exit if all group did not pass the member check
         if (count($this->groups) < 1) {
             return;
         }
-        
+
         foreach ($this->groups as $g) {
             $args[] = $g->getAccount();
         }
@@ -149,7 +150,7 @@ class Unlock
             throw new \RuntimeException('Could not run exam_plan_unlock!', 0, $e);
         }
     }
-    
+
     /**
      * Validates member amount of groups.
      *
@@ -160,17 +161,17 @@ class Unlock
         if (count($this->groups) < 1) {
             throw new \InvalidArgumentException('No groups specified!');
         }
-        
+
         // reset
         $this->errors = [];
         $this->failedGroups = [];
-        
+
         $minMembers = $this->config->get('ExamPlanUnlockMinMembers');
         // return if there a no restrictions
         if ($minMembers === 0) {
             return;
         }
-        
+
         foreach ($this->groups as $k => $v) {
             if ($v->getUsers()->count() < $minMembers) {
                 $this->errors[] = __('Group "%s" has too less members for unlocking.', (string)$v);
@@ -181,7 +182,7 @@ class Unlock
             }
         }
     }
-    
+
     /**
      * Get last shell output
      *
@@ -191,7 +192,7 @@ class Unlock
     {
         return $this->shell->getOutput();
     }
-    
+
     /**
      * Get last shell error output
      *
@@ -201,7 +202,7 @@ class Unlock
     {
         return $this->shell->getError();
     }
-    
+
     /**
      * Gets last shell exit code
      */
@@ -209,7 +210,7 @@ class Unlock
     {
         return $this->shell->getExitCode();
     }
-    
+
     /**
      * Get errors thrown during unlocking
      *
@@ -219,7 +220,7 @@ class Unlock
     {
         return $this->errors;
     }
-    
+
     /**
      * Get groups which didn't pass the member check
      *

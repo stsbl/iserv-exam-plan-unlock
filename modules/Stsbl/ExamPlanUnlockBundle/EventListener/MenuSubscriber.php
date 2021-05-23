@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Stsbl\ExamPlanUnlockBundle\EventListener;
@@ -13,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /*
  * The MIT License
  *
- * Copyright 2020 Felix Jacobi.
+ * Copyright 2021 Felix Jacobi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +39,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * @author Felix Jacobi <felix.jacobi@stsbl.de>
  * @license MIT license <https://opensource.org/licenses/MIT>
  */
-class MenuSubscriber implements AdminMenuListenerInterface, EventSubscriberInterface
+final class MenuSubscriber implements AdminMenuListenerInterface, EventSubscriberInterface
 {
     /**
      * {@inheritdoc}
@@ -49,12 +50,12 @@ class MenuSubscriber implements AdminMenuListenerInterface, EventSubscriberInter
         if ($event->getAuthorizationChecker()->isGranted(UnlockVoter::ATTRIBUTE)) {
             $menu = $event->getMenu();
             $child = $menu->getChild('modules');
-            
+
             $item = $child->addChild('admin_examplan_unlock', [
                 'route' => 'admin_examplan_unlock',
                 'label' => _('Unlock groups for exam plan'),
             ]);
-            
+
             $item->setExtra('icon', 'calendar-blue');
             $item->setExtra('icon_style', 'fugue');
         }
@@ -65,17 +66,17 @@ class MenuSubscriber implements AdminMenuListenerInterface, EventSubscriberInter
         // check privilege
         if ($event->getAuthorizationChecker()->isGranted(UnlockVoter::ATTRIBUTE)) {
             $menu = $event->getMenu();
-            
+
             $item = $menu->addChild('manage_examplan_unlock', [
                 'route' => 'manage_examplan_unlock',
                 'label' => _('Unlock groups for exam plan'),
             ]);
-            
+
             $item->setExtra('icon', 'calendar-blue');
             $item->setExtra('icon_style', 'fugue');
         }
     }
-    
+
     /**
      * {@inheritdoc}
      */

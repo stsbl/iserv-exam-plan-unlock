@@ -1,11 +1,13 @@
 <?php
+
 // src/Stsbl/ExamPlanUnlockBundle/Security/Privilege.php
+
 namespace Stsbl\ExamPlanUnlockBundle\Security;
 
 /*
  * The MIT License
  *
- * Copyright 2020 Felix Jacobi.
+ * Copyright 2021 Felix Jacobi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +34,9 @@ namespace Stsbl\ExamPlanUnlockBundle\Security;
  * @author Felix Jacobi <felix.jacobi@stsbl.de>
  * @license MIT license <https://opensource.org/licenses/MIT>
  */
-final class Privilege 
+final class Privilege
 {
-    const UNLOCKER= 'PRIV_EXAM_PLAN_UNLOCKER';
-    
-    const FLAG_UNLOCKABLE = 'exam_plan_unlock';
+    public const UNLOCKER= 'PRIV_EXAM_PLAN_UNLOCKER';
+
+    public const FLAG_UNLOCKABLE = 'exam_plan_unlock';
 }

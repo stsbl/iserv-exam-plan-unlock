@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Stsbl\ExamPlanUnlockBundle\Controller;
@@ -20,7 +21,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /*
  * The MIT License
  *
- * Copyright 2020 Felix Jacobi.
+ * Copyright 2021 Felix Jacobi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +48,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @author Felix Jacobi <felix.jacobi@stsbl.de>
  * @license MIT license <https://opensource.org/licenses/MIT>
  */
-class ExamPlanUnlockController extends AbstractPageController
+final class ExamPlanUnlockController extends AbstractPageController
 {
     /**
      * @var GroupDetector
@@ -79,7 +80,7 @@ class ExamPlanUnlockController extends AbstractPageController
         /* @var $builder \Symfony\Component\Form\FormBuilder */
         $builder = $this->get('form.factory')->createNamedBuilder('exam_plan_unlock');
         $availableGroups = $this->detector->getGroups();
-        
+
         $builder
             ->add('groups', EntityType::class, [
                 'label' => _('Groups'),
@@ -103,10 +104,10 @@ class ExamPlanUnlockController extends AbstractPageController
                 'icon' => 'ok'
             ])
         ;
-        
+
         return $builder->getForm();
     }
-    
+
     /**
      * Provides page with form for group unlocking
      *
@@ -121,25 +122,25 @@ class ExamPlanUnlockController extends AbstractPageController
         $form->handleRequest($request);
         $routeName = $request->get('_route');
         $failedGroups = null;
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $groups = $form->getData()['groups'];
 
             $this->unlocker->setGroups($groups);
             $this->unlocker->unlock();
-            
+
             if (!empty($errors = $this->unlocker->getErrors())) {
-                $this->addFlash('error', implode("\n", $errors));
+                $this->flashMessage()->error(implode("\n", $errors));
             }
-            
+
             if (!empty($errors = $this->unlocker->getErrorOutput())) {
-                $this->addFlash('error', implode("\n", $errors));
+                 $this->flashMessage()->error(implode("\n", $errors));
             }
-            
+
             if (!empty($output = $this->unlocker->getOutput())) {
-                $this->addFlash('success', implode("\n", $output));
+                $this->flashMessage()->success(implode("\n", $output));
             }
-            
+
             // replace handled form with unhandled one
             $form = $this->getUnlockForm();
             // re-add failed groups
@@ -148,19 +149,19 @@ class ExamPlanUnlockController extends AbstractPageController
             }
         } else {
             foreach ($form->getErrors(true) as $e) {
-                $this->addFlash('error', $e->getMessage());
+                $this->flashMessage()->error($e->getMessage());
             }
         }
-        
+
         // move page into admin section for administrators
         if ($routeName === 'admin_examplan_unlock') {
-            $bundle = 'IServAdminBundle';
+            $bundle = '@IServAdmin';
             $menu = null;
         } else {
-            $bundle = 'IServCoreBundle';
+            $bundle = '@IServCore/';
             $menu = $this->managementMenu;
         }
-        
+
         // track path
         if ($bundle === 'IServCoreBundle') {
             $this->addBreadcrumb(_('Administration'), $this->generateUrl('manage_index'));
@@ -168,9 +169,9 @@ class ExamPlanUnlockController extends AbstractPageController
         } else {
             $this->addBreadcrumb(_('Unlock groups for exam plan'), $this->generateUrl($routeName));
         }
-        
+
         $view = $form->createView();
-        
+
         return [
             'bundle' => $bundle,
             'menu' => $menu,

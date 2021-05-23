@@ -1,16 +1,18 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Stsbl\ExamPlanUnlockBundle;
 
 use IServ\CoreBundle\Routing\AutoloadRoutingBundleInterface;
 use Stsbl\ExamPlanUnlockBundle\DependencyInjection\StsblExamPlanUnlockExtension;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /*
  * The MIT License
  *
- * Copyright 2020 Felix Jacobi.
+ * Copyright 2021 Felix Jacobi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,9 +37,12 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * @author Felix Jacobi <felix.jacobi@stsbl.de>
  * @license MIT license <https://opensource.org/licenses/MIT>
  */
-class StsblExamPlanUnlockBundle extends Bundle implements AutoloadRoutingBundleInterface
+final class StsblExamPlanUnlockBundle extends Bundle implements AutoloadRoutingBundleInterface
 {
-    public function getContainerExtension(): StsblExamPlanUnlockExtension
+    /**
+     * {@inheritDoc}
+     */
+    public function getContainerExtension(): ?ExtensionInterface
     {
         return new StsblExamPlanUnlockExtension();
     }

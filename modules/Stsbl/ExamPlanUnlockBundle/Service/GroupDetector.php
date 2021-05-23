@@ -1,9 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Stsbl\ExamPlanUnlockBundle\Service;
 
-use Doctrine\ORM\EntityManager;
 use IServ\CoreBundle\Entity\Group;
 use IServ\CoreBundle\Repository\GroupRepository;
 use IServ\CoreBundle\Security\Core\SecurityHandler;
@@ -13,7 +13,7 @@ use Stsbl\ExamPlanUnlockBundle\Security\Privilege;
 /*
  * The MIT License
  *
- * Copyright 2020 Felix Jacobi.
+ * Copyright 2021 Felix Jacobi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ use Stsbl\ExamPlanUnlockBundle\Security\Privilege;
  * @author Felix Jacobi <felix.jacobi@stsbl.de>
  * @license MIT license <https://opensource.org/licenses/MIT>
  */
-class GroupDetector
+final class GroupDetector
 {
     /**
      * @var GroupRepository
@@ -69,20 +69,18 @@ class GroupDetector
 
         $privilegeQueryBuilder
             ->select('g2.account')
-            ->join('g2.privileges', 'p')
-            ->where('p.id = :priv')
+            ->join('g2.flags', 'f')
+            ->where('f.id = :flag')
         ;
 
-        $detectedGroups = $this->repository->createFindByFlagQueryBuilder(Privilege::FLAG_UNLOCKABLE)
+        return $this->repository->createFindByFlagQueryBuilder(Privilege::FLAG_UNLOCKABLE)
             ->andWhere($privilegeQueryBuilder->expr()->eq('g.owner', ':owner'))
             ->andWhere($privilegeQueryBuilder->expr()->notIn('g.account', $privilegeQueryBuilder->getDQL()))
             ->andWhere($privilegeQueryBuilder->expr()->isNull('g.deleted'))
             ->setParameter('owner', $this->securityHandler->getUser())
-            ->setParameter('priv', strtolower(substr(ExamPrivilege::DOING_EXAMS, 5)))
+            ->setParameter('flag', ExamPrivilege::FLAG_DOING_EXAMS)
             ->getQuery()
             ->getResult()
-        ;
-        
-        return $detectedGroups;
+            ;
     }
 }
