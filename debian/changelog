@@ -1,3 +1,11 @@
+stsbl-iserv-exam-plan-unlock (21.08.17.1) stable; urgency=medium
+
+  * Updated license copyright
+  * Fixed Build-Depends
+  * Rectored code and fixed deprecations
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Tue, 17 Aug 2021 23:18:24 +0200
+
 stsbl-iserv-exam-plan-unlock (20.08.02-1) testing; urgency=medium
 
   * Bumped copyright
