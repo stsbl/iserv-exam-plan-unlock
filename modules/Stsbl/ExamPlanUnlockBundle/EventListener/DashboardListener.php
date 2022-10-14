@@ -83,7 +83,7 @@ final class DashboardListener implements HomePageListenerInterface, ManageDashbo
         if (\count($groups) > 0) {
             $event->addContent(
                 'manage.stsblexamplanunlockgroups',
-                'StsblExamPlanUnlockBundle:Dashboard:pending.html.twig',
+                '@StsblExamPlanUnlock/Dashboard/pending.html.twig',
                 [
                     'title' => __n(
                         'You have to unlock one group for the exam plan',
