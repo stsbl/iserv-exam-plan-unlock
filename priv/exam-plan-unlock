@@ -1,9 +1,11 @@
 flag.exam_plan_unlock:
+uuid 		6b54a204-7e8c-4856-8941-726bdfe8b690
 module        Exam plan
 title         Group can be unlocked by the group owner
 description   Use this flag to control which group can be unlocked afterwards for the exam plan by the group owner
 
 priv.exam_plan_unlocker:
+uuid 		f192397f-ac11-44a1-b02e-a281e8b22165
 module        Exam plan
 title         Unlock groups for exam plan
 description   Users with this privilege can unlock groups which they own for the exam plan.
