@@ -1,3 +1,11 @@
+stsbl-iserv-exam-plan-unlock (22.11.04.1) testing; urgency=medium
+
+  * Replaced deprecated twig template syntax
+  * Added UUID to privleges and flags
+  * Modernized code
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Fri, 04 Nov 2022 06:42:49 +0100
+
 stsbl-iserv-exam-plan-unlock (21.08.17.1) stable; urgency=medium
 
   * Updated license copyright
