@@ -7,7 +7,6 @@ namespace Stsbl\ExamPlanUnlockBundle\Service;
 use Doctrine\Common\Collections\Collection;
 use IServ\CoreBundle\Entity\Group;
 use IServ\CoreBundle\Exception\ShellExecException;
-use IServ\CoreBundle\Exception\TypeException;
 use IServ\CoreBundle\Security\Core\SecurityHandler;
 use IServ\CoreBundle\Service\ClientIp;
 use IServ\CoreBundle\Service\Shell;
@@ -48,53 +47,45 @@ final class Unlock
     public const COMMAND = '/usr/lib/iserv/exam_plan_unlock';
 
     /**
-     * @var ClientIp
+     * @var array<Group>
      */
-    private $clientIp;
+    private array $groups = [];
 
     /**
      * @var array<Group>
      */
-    private $groups;
-
-    /**
-     * @var array<Group>
-     */
-    private $failedGroups;
-
-    /**
-     * @var Shell
-     */
-    private $shell;
-
-    /**
-     * @var SecurityHandler
-     */
-    private $securityHandler;
-
-    /**
-     * @var \IServ\Library\Config\Config
-     */
-    private $config;
+    private array $failedGroups = [];
 
     /**
      * @var array<string>
      */
-    private $errors;
+    private array $errors = [];
+
+    public function __construct(
+        private readonly Shell $shell,
+        private readonly SecurityHandler $securityHandler,
+        private readonly Config $config,
+        private readonly ClientIp $clientIp
+    ) {
+    }
 
     /**
      * Set groups for next operation
      *
-     * @param Group[]|Collection $groups
+     * @param Collection|Group[] $groups
      */
-    public function setGroups($groups): void
+    public function setGroups(Collection|array $groups): void
     {
         if ($groups instanceof Collection) {
             $groups = $groups->toArray();
         }
 
         if (!is_array($groups)) {
-            throw TypeException::invalid(gettype($groups), ['array', Collection::class], '$groups');
+            throw \IServ\Library\Common\Exception\TypeException::invalid(
+                gettype($groups),
+                ['array', Collection::class],
+                '$groups'
+            );
         }
 
         $this->groups = $groups;
@@ -108,18 +99,10 @@ final class Unlock
         $this->groups[] = $group;
     }
 
-    public function __construct(Shell $shell, SecurityHandler $securityHandler, Config $config, ClientIp $clientIp)
-    {
-        $this->shell = $shell;
-        $this->securityHandler = $securityHandler;
-        $this->config = $config;
-        $this->clientIp = $clientIp;
-    }
-
     /**
      * Unlock groups which were previously set via <tt>setGroups</tt>.
      */
-    public function unlock()
+    public function unlock(): void
     {
         $args = [];
         $args[] = self::COMMAND;

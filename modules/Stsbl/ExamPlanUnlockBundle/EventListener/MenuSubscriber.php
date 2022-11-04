@@ -51,7 +51,7 @@ final class MenuSubscriber implements AdminMenuListenerInterface, EventSubscribe
             $menu = $event->getMenu();
             $child = $menu->getChild('modules');
 
-            $item = $child->addChild('admin_examplan_unlock', [
+            $item = $child?->addChild('admin_examplan_unlock', [
                 'route' => 'admin_examplan_unlock',
                 'label' => _('Unlock groups for exam plan'),
             ]);
@@ -80,7 +80,7 @@ final class MenuSubscriber implements AdminMenuListenerInterface, EventSubscribe
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             Events::MENU => 'onBuildAdminMenu',

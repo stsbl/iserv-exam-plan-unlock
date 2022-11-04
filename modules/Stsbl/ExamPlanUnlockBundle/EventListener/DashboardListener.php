@@ -41,14 +41,10 @@ use Stsbl\ExamPlanUnlockBundle\Service\GroupDetector;
  */
 final class DashboardListener implements HomePageListenerInterface, ManageDashboardListenerInterface
 {
-    /**
-     * @var GroupDetector
-     */
-    private $detector;
 
-    public function __construct(GroupDetector $detector)
-    {
-        $this->detector = $detector;
+    public function __construct(
+        private readonly GroupDetector $detector,
+    ) {
     }
 
     /**

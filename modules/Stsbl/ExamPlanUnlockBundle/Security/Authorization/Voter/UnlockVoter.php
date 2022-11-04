@@ -42,20 +42,10 @@ class UnlockVoter extends Voter
 {
     public const ATTRIBUTE = 'CAN_UNLOCK_GROUPS_FOR_EXAM_PLAN';
 
-    /**
-     * @var AccessDecisionManagerInterface
-     */
-    private $decisionManager;
-
-    /**
-     * @var GroupDetector
-     */
-    private $detector;
-
-    public function __construct(AccessDecisionManagerInterface $decisionManager, GroupDetector $detector)
-    {
-        $this->decisionManager = $decisionManager;
-        $this->detector = $detector;
+    public function __construct(
+        private readonly AccessDecisionManagerInterface $decisionManager,
+        private readonly GroupDetector $detector
+    ) {
     }
 
     /**

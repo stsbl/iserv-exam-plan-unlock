@@ -50,26 +50,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 final class ExamPlanUnlockController extends AbstractPageController
 {
-    /**
-     * @var GroupDetector
-     */
-    private $detector;
-
-    /**
-     * @var ItemInterface
-     */
-    private $managementMenu;
-
-    /**
-     * @var Unlock
-     */
-    private $unlocker;
-
-    public function __construct(GroupDetector $detector, ItemInterface $managementMenu, Unlock $unlocker)
-    {
-        $this->detector = $detector;
-        $this->managementMenu = $managementMenu;
-        $this->unlocker = $unlocker;
+    public function __construct(
+        private readonly GroupDetector $detector,
+        private readonly ItemInterface $managementMenu,
+        private readonly Unlock $unlocker,
+    ) {
     }
 
     /**
@@ -134,7 +119,7 @@ final class ExamPlanUnlockController extends AbstractPageController
             }
 
             if (!empty($errors = $this->unlocker->getErrorOutput())) {
-                 $this->flashMessage()->error(implode("\n", $errors));
+                $this->flashMessage()->error(implode("\n", $errors));
             }
 
             if (!empty($output = $this->unlocker->getOutput())) {
@@ -158,12 +143,12 @@ final class ExamPlanUnlockController extends AbstractPageController
             $bundle = '@IServAdmin';
             $menu = null;
         } else {
-            $bundle = '@IServCore/';
+            $bundle = '@IServCore';
             $menu = $this->managementMenu;
         }
 
         // track path
-        if ($bundle === 'IServCoreBundle') {
+        if ($bundle === '@IServCore') {
             $this->addBreadcrumb(_('Administration'), $this->generateUrl('manage_index'));
             $this->addBreadcrumb(_('Unlock groups for exam plan'), $this->generateUrl($routeName));
         } else {
