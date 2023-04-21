@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stsbl\ExamPlanUnlockBundle\Controller;
 
 use IServ\CoreBundle\Controller\AbstractPageController;
+use IServ\CoreBundle\Entity\Group;
 use Knp\Menu\ItemInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -63,13 +64,13 @@ final class ExamPlanUnlockController extends AbstractPageController
     private function getUnlockForm(): FormInterface
     {
         /* @var $builder \Symfony\Component\Form\FormBuilder */
-        $builder = $this->get('form.factory')->createNamedBuilder('exam_plan_unlock');
+        $builder = $this->container->get('form.factory')->createNamedBuilder('exam_plan_unlock');
         $availableGroups = $this->detector->getGroups();
 
         $builder
             ->add('groups', EntityType::class, [
                 'label' => _('Groups'),
-                'class' => 'IServCoreBundle:Group',
+                'class' => Group::class,
                 'select2-icon' => 'legacy-act-group',
                 'multiple' => true,
                 'required' => false,
