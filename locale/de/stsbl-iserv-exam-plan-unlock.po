@@ -16,11 +16,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
-#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
 msgid "Administration"
 msgstr "Verwaltung"
 
-#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
 msgid "Edit group to fill with members"
 msgstr "Gruppe bearbeiten, um Mitglieder hinzuzufügen"
 
@@ -80,7 +80,7 @@ msgid "Select the groups which you want to unlock for the exam plan."
 msgstr ""
 "Wählen Sie die Gruppen, die Sie für den Klausurplan freischalten möchten."
 
-#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
 msgid ""
 "The following couldn't became unlocked for the exam plan because they "
 "haven't enough members:"
@@ -97,11 +97,11 @@ msgid "Unlock groups"
 msgstr "Gruppen freischalten"
 
 #: priv/exam-plan-unlock
-#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
-#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
 #: modules/Stsbl/ExamPlanUnlockBundle/EventListener/MenuSubscriber.php
-#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/Dashboard/pending.html.twig.php
-#: /tmp/twig2php-stsbl-iserv-exam-plan-unlock/modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
+#: modules/Stsbl/ExamPlanUnlockBundle/Controller/ExamPlanUnlockController.php
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/translations/messsages.php
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/views/Dashboard/pending.html.twig.php
+#: modules/Stsbl/ExamPlanUnlockBundle/Resources/views/ExamPlanUnlock/unlock.html.twig.php
 msgid "Unlock groups for exam plan"
 msgstr "Gruppen für Klausurplan freischalten"
 
