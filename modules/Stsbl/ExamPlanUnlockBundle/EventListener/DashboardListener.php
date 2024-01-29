@@ -41,7 +41,6 @@ use Stsbl\ExamPlanUnlockBundle\Service\GroupDetector;
  */
 final class DashboardListener implements HomePageListenerInterface, ManageDashboardListenerInterface
 {
-
     public function __construct(
         private readonly GroupDetector $detector,
     ) {

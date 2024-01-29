@@ -42,7 +42,6 @@ use Stsbl\ExamPlanUnlockBundle\Security\Privilege;
  */
 final class GroupDetector
 {
-
     public function __construct(
         private readonly GroupRepository $repository,
         private readonly SecurityHandler $securityHandler
@@ -72,6 +71,6 @@ final class GroupDetector
             ->setParameter('flag', ExamPrivilege::FLAG_DOING_EXAMS)
             ->getQuery()
             ->getResult()
-            ;
+        ;
     }
 }

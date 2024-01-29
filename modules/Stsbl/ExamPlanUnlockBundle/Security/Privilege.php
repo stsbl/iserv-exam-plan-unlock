@@ -36,7 +36,7 @@ namespace Stsbl\ExamPlanUnlockBundle\Security;
  */
 final class Privilege
 {
-    public const UNLOCKER= 'PRIV_EXAM_PLAN_UNLOCKER';
+    public const UNLOCKER = 'PRIV_EXAM_PLAN_UNLOCKER';
 
     public const FLAG_UNLOCKABLE = 'exam_plan_unlock';
 }
